@@ -3,23 +3,21 @@
 <head>
 <?php
   include('fredyNav.php');
-  include('../php/conexion.php');
   include('../php/cobrador.php');
   include('../php/admin.php');
 ?>
-</style>
 <title>SIC | Reporte Instalaciones</title>
 <script>
-function buscar_instalaciones() {
-    var textoDe = $("input#fecha_de").val();
-    var textoA = $("input#fecha_a").val();
-      $.post("../php/buscar_instalaciones.php", {
-          valorDe: textoDe,
-          valorA: textoA
-        }, function(mensaje) {
-            $("#resultado_instalaciones").html(mensaje);
-        }); 
-};
+  function buscar_instalaciones() {
+      var textoDe = $("input#fecha_de").val();
+      var textoA = $("input#fecha_a").val();
+        $.post("../php/buscar_instalaciones.php", {
+            valorDe: textoDe,
+            valorA: textoA
+          }, function(mensaje) {
+              $("#resultado_instalaciones").html(mensaje);
+          }); 
+  };
 </script>
 </head>
 <main>

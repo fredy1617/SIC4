@@ -4,7 +4,26 @@
 	<title>SIC | Reporte de Refacciones</title>
 <?php
 include ('fredyNav.php');
+include ('../php/cobrador.php');
+include ('../php/admin.php');
 ?>
+<script>
+  function buscar_refacciones(){
+	var textoDe = $("input#fecha_de").val();
+	var textoA = $("input#fecha_a").val();
+	if (textoDe == "" || textoA == "")
+	{
+        M.toast({html:"Ingrese un rango de fechas.", classes: "rounded"});
+	}else{
+	$.post("../php/buscar_refacciones.php", {
+		  valorDe: textoDe,
+		  valorA: textoA
+		}, function (mensaje){
+			$("#datos").html(mensaje);
+		});
+	}
+  };
+</script>
 </head>
 <body>
 	<div class="container">
@@ -25,22 +44,7 @@ include ('fredyNav.php');
                 <button class="btn waves-light waves-effect right pink" onclick="buscar_refacciones();"><i class="material-icons prefix">send</i></button>
             </div>
 		</div>
-		<div class="row">
-			<table lass="bordered highlight responsive-table" width="100%">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Descripcion</th>
-						<th>Cantidad</th>
-						<th>Cliente</th>
-						<th>Telefono</th>
-						<th>Dispositivo</th>
-					</tr>		
-				</thead>
-				<tbody id="datos">
-					
-				</tbody>
-			</table>			
+		<div class="row" id="datos">			
 		</div>
 	</div>
 </body>
