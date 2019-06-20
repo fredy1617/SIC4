@@ -146,9 +146,6 @@ function salida(imprimir) {
                 <option value="<?php echo $datos['estatus'];?>" selected><?php echo $datos['estatus'];?></option>
                 <option value="Entregado">Entregado</option>
                 <option value="Listo (En Taller)">Listo (En Taller)</option>
-                <option value="Listo (No Reparado)">Listo (No Reparado)</option>
-                <option value="En Proceso">En Proceso</option>
-                <option value="Cotizado">Cotizado</option>
               </select>
             </div>
              <input name="id_dispositivo" type="hidden" class="validate center" data-length="200" value="<?php echo $datos['id_dispositivo'];?>">

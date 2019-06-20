@@ -4,6 +4,8 @@
 	<title>SIC | Reporte de Telefono</title>
 <?php
 include ('fredyNav.php');
+include('../php/cobrador.php');
+
 
 ?>
 </head>

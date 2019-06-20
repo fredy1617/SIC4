@@ -23,6 +23,7 @@ if(mysqli_num_rows($sql_buscar)>0){
             <th>Descripción</th>
             <th>Lugar</th>
             <th>Fecha</th>
+            <th>Hora</th>
             <th>Estatus</th>
         </tr>
     </thead>
@@ -55,6 +56,7 @@ if(mysqli_num_rows($sql_buscar)>0){
             <td><?php echo $sql_reporte['descripcion']; ?></td>
             <td><?php echo $comunidad['nombre'];?></td>
             <td><?php echo $sql_reporte['fecha']; ?></td>
+            <td><?php echo $sql_reporte['hora_atendido']; ?></td>
             <td><?php echo $estatus; ?></td>
                     </tr>
             <?php

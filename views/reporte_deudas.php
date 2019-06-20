@@ -4,6 +4,8 @@
 	<title>SIC | Reportes de Deudas</title>
 <?php
 include ('fredyNav.php');
+include('../php/cobrador.php');
+
 ?>
 </head>
 <body>

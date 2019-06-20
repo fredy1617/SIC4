@@ -39,8 +39,10 @@ if($numero_columnas==0){
             <th>Nombre</th>
             <th>Telefono</th>
             <th>Lugar</th>
-            <th>Dirección</th>
-			<th>Estatus</th>
+            <th>Dirección</th>            
+            <th>Fecha</th>
+            <th>Hora</th>
+			      <th>Estatus</th>
         </tr>
       </thead>
       <tbody>
@@ -54,7 +56,7 @@ if($numero_columnas==0){
         }else{
             while($tmp = mysqli_fetch_array($sql_tmp)){
                 $id_cliente = $tmp['id_cliente'];
-                $cliente = mysqli_fetch_array(mysqli_query($conn,"SELECT instalacion FROM clientes WHERE id_cliente =$id_cliente"));
+                $cliente = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM clientes WHERE id_cliente =$id_cliente"));
             $instalacion =$cliente['instalacion'];
             $estatus = '<span class="new badge red" data-badge-caption="Pendiente"></span>';
             if ($instalacion == 1) {
@@ -70,6 +72,8 @@ if($numero_columnas==0){
               <td><?php echo  $tmp['telefono']; ?></td>
               <td><?php echo $sql_comunidad1['nombre']; ?></td>
               <td><?php echo $tmp['direccion']; ?></td>
+              <td><?php echo $cliente['fecha_instalacion']; ?></td> 
+              <td><?php echo $cliente['hora_alta']; ?></td> 
               <td><?php echo $estatus; ?></td>
             </tr>
         <?php

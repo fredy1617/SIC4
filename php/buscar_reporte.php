@@ -33,6 +33,7 @@ echo $mensaje;
 						<th>Id. Cliente</th>
 						<th>Nombre Cliente</th>
 						<th>Fecha Solución</th>
+						<th>Hora</th>
 						<th width="15%">Descripción</th>
 						<th>Técnico</th>
 					</tr>
@@ -53,8 +54,9 @@ echo $mensaje;
 					<tr>
 						<td><?php echo $info['id_reporte']; ?></td>
 						<td><?php echo $info['id_cliente']; ?></td>
-						<td><?php echo $cliente['nombre']; ?></td>						
+						<td><?php echo $cliente['nombre']; ?></td>		
 						<td><?php echo $info['fecha_solucion']; ?></td>
+						<td><?php echo $info['hora_atendido']; ?></td>
 						<td><?php echo $info['descripcion']; ?></td>
 						<td><?php echo $tecnico['user_name']; ?></td>
 					</tr>

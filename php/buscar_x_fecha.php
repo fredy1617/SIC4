@@ -28,6 +28,7 @@ while($usuario = mysqli_fetch_array($usuarios)){
         <th>Nombre</th>
         <th>Comunidad</th>
         <th>Fecha</th>
+        <th>Hora</th>
         <th>Técnicos</th>
       </tr>
     </thead>
@@ -45,6 +46,7 @@ while($usuario = mysqli_fetch_array($usuarios)){
           <td><?php echo $instalaciones['nombre'];?></td>
           <td><?php echo $comunidad['nombre'];?></td>
           <td><?php echo $instalaciones['fecha_instalacion'];?></td>
+          <td><?php echo $instalaciones['hora_alta']; ?></td>
           <td><?php echo $instalaciones['tecnico'];?></td>
         </tr>
       <?php
@@ -68,6 +70,7 @@ $sql = mysqli_query($conn, "SELECT * FROM reportes WHERE  fecha_solucion>='$Valo
             <th>Id. Cliente</th>
             <th>Nombre Cliente</th>
             <th>Fecha Solución</th>
+            <th>Hora</th>
             <th width="15%">Descripción</th>
             <th>Técnico</th>
           </tr>
@@ -85,6 +88,7 @@ $sql = mysqli_query($conn, "SELECT * FROM reportes WHERE  fecha_solucion>='$Valo
             <td><?php echo $info['id_cliente']; ?></td>
             <td><?php echo $cliente['nombre']; ?></td>            
             <td><?php echo $info['fecha_solucion']; ?></td>
+            <td><?php echo $info['hora_atendido']; ?></td>
             <td><?php echo $info['descripcion']; ?></td>
             <td><?php echo $user; ?></td>
           </tr>

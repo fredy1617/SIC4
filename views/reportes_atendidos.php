@@ -5,6 +5,7 @@
 <?php 
 include('fredyNav.php');
 include('../php/conexion.php');
+include('../php/cobrador.php');
 $sql = mysqli_query($conn, "SELECT * FROM reportes WHERE atendido = 1 OR atendido != NULL ORDER BY id_reporte DESC");
 ?>
 <script>

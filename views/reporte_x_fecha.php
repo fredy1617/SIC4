@@ -5,6 +5,7 @@
 <?php
 include('fredyNav.php');
 include('../php/admin.php');
+include('../php/cobrador.php');
 ?>
 <script>
 	function reporte_x_fecha(){
