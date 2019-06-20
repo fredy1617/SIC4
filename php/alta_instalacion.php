@@ -17,6 +17,7 @@ $IdCliente = str_replace($caracteres_malos, $caracteres_buenos, $filtrarIdClient
 $Tecnico = str_replace($caracteres_malos, $caracteres_buenos, $filtrarTecnico);
 $Tipo = str_replace($caracteres_malos, $caracteres_buenos, $filtrarTipo);
 $FechaInstalacion = date('Y-m-d');
+$Hora = date('h:i:s');
 
 $Contratro = 0;
 $Prepago = 1;
@@ -77,7 +78,7 @@ if (filter_var($IP, FILTER_VALIDATE_IP)) {
 		            $API->write('=comment='.$comment,true);         // comentario
 		            $READ = $API->read(false);
 		            $ARRAY = $API->parse_response($READ);  
-		            $sql="UPDATE clientes SET ip='$IP', material='$Material', tecnico='$Tecnico', instalacion=1, fecha_instalacion='$FechaInstalacion', fecha_corte='$FechaInstalacion', contrato = '$Contratro', Prepago = '$Prepago'  WHERE id_cliente=$IdCliente";
+		            $sql="UPDATE clientes SET ip='$IP', material='$Material', tecnico='$Tecnico', instalacion=1, fecha_instalacion='$FechaInstalacion', fecha_corte='$FechaInstalacion', contrato = '$Contratro', Prepago = '$Prepago', hora_alta = '$Hora' WHERE id_cliente=$IdCliente";
 		        	mysqli_query($conn, $sql);                     
 		            echo '<script >M.toast({html:"Cliente registrado en Mikrotik con exito.", classes: "rounded"})</script>';
 		            echo '<script>function recargar() {

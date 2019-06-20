@@ -19,6 +19,8 @@ $IdCliente = str_replace($caracteres_malos, $caracteres_buenos, $filtrarIdClient
 $Tecnico = str_replace($caracteres_malos, $caracteres_buenos, $filtrarTecnico);
 $Tipo = str_replace($caracteres_malos, $caracteres_buenos, $filtrarTipo);
 $FechaInstalacion = date('Y-m-d');
+$Hora = date('h:i:s');
+
 $Contrato = 0;
 $Prepago = 1;
 if ($Tipo == 1) {
@@ -46,7 +48,8 @@ if (filter_var($IP, FILTER_VALIDATE_IP)) {
 
 		$nombre_completo = $id_paquete1['nombre'];
 		//////// configura tus datos		
-		            $sql="UPDATE clientes SET ip='$IP', material='$Material', descripcion = '$Observacion', tecnico='$Tecnico', instalacion=1, fecha_instalacion='$FechaInstalacion', fecha_corte='$FechaInstalacion', contrato = '$Contrato', Prepago = '$Prepago' WHERE id_cliente=$IdCliente";
+		            $sql="UPDATE clientes SET ip='$IP', material='$Material', tecnico='$Tecnico', instalacion=1, fecha_instalacion='$FechaInstalacion', fecha_corte='$FechaInstalacion', contrato = '$Contratro', Prepago = '$Prepago', hora_alta = '$Hora' WHERE id_cliente=$IdCliente";
+		            
 		        	if(mysqli_query($conn, $sql)){                     
 		            echo '<script>M.toast({html:"Cliente registrado.", classes: "rounded"})</script>';
 		            echo '<script>M.toast({html:"Favor de dar de alta en el servidor al cliente.", classes: "rounded")</script>';
