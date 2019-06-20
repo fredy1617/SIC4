@@ -8,6 +8,7 @@ $Tecnico = $conn->real_escape_string($_POST['valorTecnico']);
 $Atendido = $conn->real_escape_string($_POST['valorAtendido']);
 $Fecha_visita = $conn->real_escape_string($_POST['valorFecha']);
 $FechaAtendido = date('Y-m-d');
+$Hora = date('h:i:s');
 
 if($Atendido == 'Sí'){
 	$Atendido = '1';	
@@ -35,7 +36,7 @@ if ($Fecha_visita != 0) {
 //Variable vacía (para evitar los E_NOTICE)
 $mensaje = "";
 
-	$sql = "UPDATE reportes SET falla = '$Falla', solucion = '$Solucion', tecnico = '$Tecnico', atendido = '$Atendido', atender_visita = '$Atender_Visita',  fecha_solucion = '$FechaAtendido'".$mas." WHERE id_reporte = $IdReporte";
+	$sql = "UPDATE reportes SET falla = '$Falla', solucion = '$Solucion', tecnico = '$Tecnico', atendido = '$Atendido', atender_visita = '$Atender_Visita',  fecha_solucion = '$FechaAtendido'".$mas." ,hora_atendido = '$Hora' WHERE id_reporte = $IdReporte";
 	if(mysqli_query($conn, $sql)){
 		$mensaje = '<script>M.toast({html:"Reporte actualizado correctamente.", classes: "rounded"})</script>';
 		echo '<script>

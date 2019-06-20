@@ -15,10 +15,8 @@ function alta_instalacion_SM(bandera) {
         textoTecnicos = textoTecnicos+textoCheck+', ';
       }
     }
-    M.toast({html :"No hay numero."+textoTecnicos, classes: "rounded"});
 
     textoTecnicos = textoTecnicos.slice(0, -2);
-    M.toast({html :"Despues."+textoTecnicos, classes: "rounded"});
 
     var textoIP = $("input#ip").val();
     var textoMaterial = $("textarea#material").val();    
