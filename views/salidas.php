@@ -46,7 +46,7 @@ function salida(imprimir) {
         n++;
     }
     if (entra == "No") {
-      M.toast({html:"Dice que no.", classes: "rounded"});
+      //M.toast({html:"Dice que no.", classes: "rounded"});
     }else if(textoPrecio == ""){
       M.toast({html:"El campo Mano de Obra se encuentra vacío.", classes: "rounded"});
     }else if(textoEstatus == '0'){

@@ -60,7 +60,7 @@ $ValorA = $conn->real_escape_string($_POST['valorA']);
 	  </tr>
 	<?php
 	}else{
-	  echo "<center><b><h5>Este usuario aún no ha registrado cortes</h5></b></center>";
+	  echo "<center><b><h5>No se encontraron cortes para estas fechas</h5></b></center>";
 	}
 	?>
 	<?php 

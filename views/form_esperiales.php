@@ -40,7 +40,7 @@ function insert_cliente() {
       M.toast({html: 'El campo Especificación se encuentra vacío.', classes: 'rounded'});
     }else{
       $.post("../php/insert_cliente_especial.php", {
-          valorNombres: textoNombres+' '+textoAM+' '+textoAP,
+          valorNombres: textoNombres+' '+textoAP+' '+textoAM,
           valorTelefono: textoTelefono,
           valorComunidad: textoComunidad,
           valorDescripcion: textoDescripcion,

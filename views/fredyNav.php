@@ -66,6 +66,7 @@ $rutas = mysqli_fetch_array(mysqli_query($conn,"SELECT count(*)FROM rutas WHERE 
 				    	<li><a href="reportes_atendidos.php" class="black-text"><i class="material-icons">done</i>Reportes Atendidos </a></li>
 				    	<li><a href="rep_instalaciones.php" class="black-text"><i class="material-icons">format_list_numbered</i>Rep. Instalaciones</a></li>
 				    	<li><a href="reporte_deudas.php" class="black-text"><i class="material-icons">list</i>Reporte Deudas</a></li>
+				    	<li><a href="rep_refacciones.php" class="black-text"><i class="material-icons">list</i>Rep. Refacciones</a></li>
 				    </ul>
 				    <!--<li><a href="rep_pagos.php" class="black-text"><i class="material-icons">report</i>Reporte Pagos </a></li>-->
 				    <li><a href="historial_cortes.php" class="black-text"><i class="material-icons">content_cut</i>Historial de Cortes </a></li>

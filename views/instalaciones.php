@@ -78,13 +78,19 @@
         		$sql_pendientes = mysqli_query($conn,"SELECT * FROM clientes WHERE instalacion is NULL ORDER BY id_cliente ASC");
         		while($pendientes = mysqli_fetch_array($sql_pendientes)){
               $id_comunidad = $pendientes['lugar'];
-              $sql_comunidad = mysqli_fetch_array(mysqli_query($conn,"SELECT nombre FROM comunidades WHERE id_comunidad=$id_comunidad"));
+              if ($id_comunidad == "") {
+                $comuni= "CONOCIDA";
+              }else{
+                $sql_comunidad = mysqli_fetch_array(mysqli_query($conn,"SELECT nombre FROM comunidades WHERE id_comunidad=$id_comunidad"));
+                $comuni=$sql_comunidad['nombre'];
+              }
+              
         			?>
                     <tr>
                         <td><?php echo $pendientes['id_cliente'];?></td>
                         <td><?php echo $pendientes['nombre'];?></td>
                         <td><?php echo $pendientes['telefono'];?></td>
-                        <td><?php echo $sql_comunidad['nombre'];?></td>
+                        <td><?php echo $comuni;?></td>
     					          <td><?php echo $pendientes['registro'];?></td>
                         <td><form method="post" action="../views/alta_instalacion.php"><input type="hidden" name="id_cliente" value="<?php echo $pendientes['id_cliente'];?>"><button button type="submit" class="btn btn-floating pink waves-effect waves-light"><i class="material-icons">done</i></button></form></td>
                         <td><a onclick="ruta(<?php echo $pendientes['id_cliente'];?>);" class="btn btn-floating pink waves-effect waves-light"><i class="material-icons">add</i></a></td>
