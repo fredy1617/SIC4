@@ -8,20 +8,20 @@ date_default_timezone_set('America/Mexico_City');
 $Fecha_Hoy = date('Y-m-d');
 $no_cliente = $_POST['no_cliente'];
 $AÑO = date('Y');
+
 $AÑO1 = strtotime('+1 year', strtotime($AÑO));
 $AÑO1 = date('Y', $AÑO1);
-$Pago = mysqli_fetch_array(mysqli_query($conn, "SELECT descripcion FROM pagos WHERE id_cliente = '$no_cliente' ORDER BY id_pago DESC LIMIT 1"));
+$Pago = mysqli_fetch_array(mysqli_query($conn, "SELECT descripcion FROM pagos WHERE id_cliente = '$no_cliente'  AND tipo = 'Mensualidad' ORDER BY id_pago DESC LIMIT 1"));
 //AQUI COLOCAMOS EL MISMO AÑO EN CASO DE SER ENERO MAS
 $ver = explode(" ", $Pago['descripcion']);
 $MAS = false;
 if (count($ver)>1) {
-  if ($ver[1]>$AÑO) {
+  if ($ver[count($ver)-1]>$AÑO) {
     $AÑO1 = strtotime('+2 year', strtotime($AÑO));
     $MAS = date('Y', $AÑO1);
     $AÑO = $ver[1];
   }
 }
-
 ?>
 <script>
 M.toast({html: 'Otro tipo de pagos en opción : OTROS PAGOS', classes: 'rounded'});
@@ -62,7 +62,6 @@ function resto_dias(){
     var Mensualidad = parseInt(MensualidadAux);
     document.formMensualidad.cantidad.value = MensualidadAux;
   }
-  
 }
 
 function promo(){
@@ -100,6 +99,7 @@ function encender(){
 function insert_pago(tipo) {  
 
   if(tipo == 1){
+
     textoTipo = "Mensualidad";
     link = "../php/insert_pago.php";
     var textoCantidad = $("input#cantidad").val();
@@ -126,6 +126,7 @@ function insert_pago(tipo) {
     }else if (textoUltimo == "DICIEMBRE "+<?php echo $AÑO; ?>+" + RECARGO" ) {
       textoDescripcion = textoMes+" "+<?php echo $AÑO1; ?>;
     }
+
     if (document.getElementById('recargo').checked==true) {
       var Mensualidad = parseInt(textoCantidad);
       textoCantidad = Mensualidad+50;
@@ -182,8 +183,7 @@ function insert_pago(tipo) {
             $("#mostrar_pagos").html(mensaje);
             $("#mostrar_pagos2").html(mesaje2);
         });
-    }
-      
+    }   
       }    
 };
 </script>
@@ -303,7 +303,7 @@ $Vence = date('Y-m-d', $nuevafecha);
       <div class="row">
       <form class="col s12" name="formMensualidad">
       <div class="row">
-        <div class="col s12 m3 l3">
+        <div class="col s12 m2 l2">
           <p>
             <br>
             <input type="checkbox" onclick="promo();" id="todos"/>
@@ -317,19 +317,23 @@ $Vence = date('Y-m-d', $nuevafecha);
             <label for="resto">Calcular días restantes</label>
           </p>
         </div>
-        <div class="col s12 m3 l3">
+        <div class="col s12 m2 l2">
           <p>
             <br>
             <input type="checkbox" id="banco"/>
             <label for="banco">Banco</label>
           </p>
         </div>
-        <div class="col s12 m3 l3">
+        <div class="col s12 m2 l2">
           <p>
             <br>
             <input type="checkbox" id="credito"/>
             <label for="credito">Credito</label>
           </p>
+        </div>
+        <div class="col s12 m3 l3" >
+              <label for="fecha_visita">Fecha de Promesa:</label>
+              <input id="fecha_visita" type="date">    
         </div>
       </div>
       <br><br><br>
@@ -383,7 +387,7 @@ $Vence = date('Y-m-d', $nuevafecha);
       <input id="id_cliente" value="<?php echo htmlentities($datos['id_cliente']);?>" type="hidden">
       <input id="ultimo" value="<?php echo htmlentities($Pago['descripcion']);?>" type="hidden">
     </form>
-    <a onclick="insert_pago(1);mostrar_pagos();"  target="_blank" class="waves-effect waves-light btn pink right "><i class="material-icons right">send</i>Registrar Pago</a>
+    <a onclick="insert_pago(1);" class="waves-effect waves-light btn pink right "><i class="material-icons right">send</i>Registrar Pago</a>
     </div>
     <br>
 
@@ -481,7 +485,7 @@ $Vence = date('Y-m-d', $nuevafecha);
      
       </form>
        </div>
-      <a onclick="insert_pago(2);mostrar_pagos();" class="waves-effect waves-light btn pink right"><i class="material-icons right">send</i>Registrar Pago</a>
+      <a onclick="insert_pago(2);" class="waves-effect waves-light btn pink right"><i class="material-icons right">send</i>Registrar Pago</a>
       <br>
   <!-- ---------------------------- TABLA FORMULARIO 2  ---------------------------------------->
   <h4>Historial</h4>
@@ -585,7 +589,7 @@ $Vence = date('Y-m-d', $nuevafecha);
         </div>
       </div>
       </form>
-      <a onclick="insert_pago(3);mostrar_pagos();" class="waves-effect waves-light btn pink right"><i class="material-icons right">send</i>Registrar Pago</a>
+      <a onclick="insert_pago(3);" class="waves-effect waves-light btn pink right"><i class="material-icons right">send</i>Registrar Pago</a>
     </div><br>
  <!-- ---------------------------- TABLA FORMULARIO 3  ---------------------------------------->
   <h4>Historial</h4>

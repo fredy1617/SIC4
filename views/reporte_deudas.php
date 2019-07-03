@@ -17,6 +17,7 @@ include('../php/cobrador.php');
 		<table class="bordered highlight responsive-table" width="100%">
 				<thead>
 					<tr>
+						<th>#</th>
 						<th>Estatus</th>
 						<th>Id. Cliente</th>
 						<th>Nombre Cliente</th>
@@ -38,6 +39,7 @@ include('../php/cobrador.php');
 				}else{
 				date_default_timezone_set('America/Mexico_City');
 				$Fecha_Hoy = date('Y-m-d');
+				$cont=0;
 				while ( $resultados = mysqli_fetch_array($sql)) {
 					$id_cliente = $resultados['id_cliente'];
 					$cliente = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM clientes WHERE id_cliente = $id_cliente"));
@@ -53,8 +55,10 @@ include('../php/cobrador.php');
 						$color = "red accent-4";
 						$estatus = "Cobrar";
 					}
+					$cont++;
 				?>
 					<tr>
+						<td><?php echo $cont; ?></td>
 						<td><span class="new badge <?php echo$color; ?>" data-badge-caption=""><?php echo $estatus; ?></span></td>
 						<td><?php echo $id_cliente; ?></td>
 						<td><?php echo $cliente['nombre']; ?></td>

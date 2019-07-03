@@ -18,7 +18,7 @@ if(mysqli_num_rows(mysqli_query($conn, "SELECT * FROM pagos WHERE id_cliente = $
 	$sql = "INSERT INTO pagos (id_cliente, cantidad, fecha, descripcion , tipo_cambio, id_user, tipo, corte) VALUES ($IdCliente, '$Cantidad', '$Fecha_hoy', '$Descripcion', '$Tipo_Campio', '$id_user', 'Abono', 0)";
 	if(mysqli_query($conn, $sql)){
           
-    $Ver = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM deudas WHERE liquidada=0 limit 1"));
+    $Ver = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM deudas WHERE id_cliente = $IdCliente AND liquidada=0 limit 1"));
      
     // SACAMOS LA SUMA DE TODAS LAS DEUDAS QUE ESTAN LIQUIDADDAS Y TODOS LOS ABONOS ....
     $deuda = mysqli_fetch_array(mysqli_query($conn, "SELECT SUM(cantidad) AS suma FROM deudas WHERE id_cliente = $IdCliente AND liquidada = 1"));
@@ -38,8 +38,10 @@ if(mysqli_num_rows(mysqli_query($conn, "SELECT * FROM pagos WHERE id_cliente = $
     }
     $id_deuda = $Ver['id_deuda'];
      while ($Entra) {
-       mysqli_query($conn, "UPDATE deudas SET liquidada = 1 WHERE id_deuda = $id_deuda");   
-      $Ver = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM deudas WHERE liquidada=0 limit 1"));
+      if (mysqli_query($conn, "UPDATE deudas SET liquidada = 1 WHERE id_deuda = $id_deuda")) {
+        echo '<script>M.toast({html:"Deuda liquidada.", classes: "rounded"})</script>';
+      }  
+      $Ver = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM deudas WHERE id_cliente = $IdCliente AND liquidada=0 limit 1"));
       $id_deuda = $Ver['id_deuda'];
       // SACAMOS LA SUMA DE TODAS LAS DEUDAS QUE ESTAN LIQUIDADDAS Y TODOS LOS ABONOS ....
       $deuda = mysqli_fetch_array(mysqli_query($conn, "SELECT SUM(cantidad) AS suma FROM deudas WHERE id_cliente = $IdCliente AND liquidada = 1"));
@@ -60,7 +62,7 @@ if(mysqli_num_rows(mysqli_query($conn, "SELECT * FROM pagos WHERE id_cliente = $
       $id_deuda = $Ver['id_deuda'];
      }
 
-		$mensaje = '<script>M.toast({html:"El abono se dió de alta satisfcatoriamente.", classes: "rounded"})</script>';
+		echo '<script>M.toast({html:"El abono se dió de alta satisfcatoriamente.", classes: "rounded"})</script>';
 	  ?>
 	  <script>
 	    var a = document.createElement("a");
@@ -70,7 +72,7 @@ if(mysqli_num_rows(mysqli_query($conn, "SELECT * FROM pagos WHERE id_cliente = $
 	  </script>
 	  <?php   
 	}else{
-		$mensaje = '<script>M.toast({html:"Ha ocurrido un error.", classes: "rounded"})</script>';	
+		echo '<script>M.toast({html:"Ha ocurrido un error.", classes: "rounded"})</script>';	
 	  }
 }
 ?>
