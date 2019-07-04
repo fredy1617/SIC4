@@ -4,6 +4,27 @@
 	<title>SIC | Clientes</title>
 <?php 
 include('fredyNav.php');
+
+#___________CHECK DE PROMESAS DE PAGO VENCIDAS______________
+include('../php/conexion.php');
+date_default_timezone_set('America/Mexico_City');
+$Hoy = date('Y-m-d');
+$sql = mysqli_query($conn, "SELECT * FROM deudas WHERE hasta is not null");
+
+if (mysqli_num_rows($sql)>0) {
+	while ($deuda = mysqli_fetch_array($sql)) {
+		$Hasta = $deuda['hasta'];
+		$Tipo = $deuda['tipo'];
+		if ($Hasta >= $Hoy AND $Tipo = 'Mensualidad') {
+			echo "Crear el reporte <br>";	
+			echo "Borrar Pago <br>";
+			echo "Borrar deuda<br>";	
+		}
+		//mysqli_query($conn, "INSERT INTO ");
+	}
+}
+#__________________________________________________________
+#__________________________________________________________
 ?>
 <script >
 	function buscar() {

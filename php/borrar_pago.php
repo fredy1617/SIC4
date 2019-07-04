@@ -16,9 +16,16 @@ $area = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM users WHERE user_i
 if($area['area']!="Administrador"){
   echo "<script >M.toast({html: 'Sólo un administrador puede borrar pagos.', classes: 'rounded'});</script>";
 }else{
+  $Pago = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM pagos WHERE id_pago=$IdPago"));
+  if ($Pago['tipo_cambio'] == 'Credito') {
+    $id_deuda = $Pago['id_deuda'];
+    if ( mysqli_query($conn, "DELETE FROM deudas WHERE id_deuda = '$id_deuda'")) {
+      echo '<script >M.toast({html:"Deuda Borrada.", classes: "rounded"})</script>';   
+    }
+  }
   if(mysqli_query($conn, "DELETE FROM pagos WHERE id_pago = '$IdPago'")){
     echo '<script >M.toast({html:"Pago Borrado.", classes: "rounded"})</script>';
-    $Pago = mysqli_fetch_array(mysqli_query($conn, "SELECT tipo FROM pagos WHERE id_pago=$IdPago"));
+    
     mysqli_query($conn, "UPDATE clientes SET fecha_corte='$FechaCorte' WHERE id_cliente='$IdCliente'");
 
   }else{

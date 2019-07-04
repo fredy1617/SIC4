@@ -106,6 +106,7 @@ function insert_pago(tipo) {
     var textoMes = $("select#mes").val();
     var textoUltimo = $("input#ultimo").val();
     var textoDescuento = $("input#descuento").val();
+    var textoHasta = $("input#hasta").val();
 
     textoDescripcion = textoMes+" "+<?php echo $AÑO; ?>;
     if (document.getElementById('todos').checked==true) {
@@ -178,7 +179,8 @@ function insert_pago(tipo) {
           valorDescripcion: textoDescripcion,
           valorIdCliente: textoIdCliente,
           valorTipoTel: tipoPago,
-          valorDescuento: textoDescuento
+          valorDescuento: textoDescuento,
+          valorHasta: textoHasta
         }, function(mensaje) {
             $("#mostrar_pagos").html(mensaje);
             $("#mostrar_pagos2").html(mesaje2);
@@ -332,8 +334,8 @@ $Vence = date('Y-m-d', $nuevafecha);
           </p>
         </div>
         <div class="col s12 m3 l3" >
-              <label for="fecha_visita">Fecha de Promesa:</label>
-              <input id="fecha_visita" type="date">    
+              <label for="hasta">Fecha de Promesa:</label>
+              <input id="hasta" type="date">    
         </div>
       </div>
       <br><br><br>

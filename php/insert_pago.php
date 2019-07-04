@@ -10,6 +10,8 @@ $Cantidad = $conn->real_escape_string($_POST['valorCantidad']);
 $Descripcion = $conn->real_escape_string($_POST['valorDescripcion']);
 $IdCliente = $conn->real_escape_string($_POST['valorIdCliente']);
 $Descuento = $conn->real_escape_string($_POST['valorDescuento']);
+$Hasta = $conn->real_escape_string($_POST['valorHasta']);
+
 if ($Descuento == "") {
   $Descuento = 0;
 }
@@ -59,7 +61,11 @@ if(mysqli_num_rows(mysqli_query($conn, "SELECT * FROM pagos WHERE id_cliente = $
 	$mensaje = '<script>M.toast({html:"Ya se encuentra un pago registrado con los mismos valores.", classes: "rounded"})</script>';
 }else{
 if ($Tipo_Campio == "Credito") {
-  mysqli_query($conn,"INSERT INTO deudas(id_cliente, cantidad, fecha_deuda, descripcion, usuario) VALUES ($IdCliente, '$RegistrarCan', '$Fecha_hoy', '$Descripcion', $id_user)");
+  $mysql= "INSERT INTO deudas(id_cliente, cantidad, fecha_deuda, hasta, tipo, descripcion, usuario) VALUES ($IdCliente, '$RegistrarCan', '$Fecha_hoy', '$Hasta', '$Tipo', '$Descripcion', $id_user)";
+  if ($Hasta == "") {
+   $mysql = "INSERT INTO deudas(id_cliente, cantidad, fecha_deuda, tipo, descripcion, usuario) VALUES ($IdCliente, '$RegistrarCan', '$Fecha_hoy', '$Tipo', '$Descripcion', $id_user)";
+  }
+  mysqli_query($conn,$mysql);
 }
 //o $consultaBusqueda sea igual a nombre + (espacio) + apellido
 $sql = "INSERT INTO pagos (id_cliente, descripcion, cantidad, fecha, tipo, id_user, corte, tipo_cambio, Cotejado) VALUES ($IdCliente, '$Descripcion', '$RegistrarCan', '$Fecha_hoy', '$Tipo', $id_user, 0, '$Tipo_Campio', '$Cotejamiento')";
