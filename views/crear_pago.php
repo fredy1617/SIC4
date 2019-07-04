@@ -16,7 +16,8 @@ $Pago = mysqli_fetch_array(mysqli_query($conn, "SELECT descripcion FROM pagos WH
 $ver = explode(" ", $Pago['descripcion']);
 $MAS = false;
 if (count($ver)>1) {
-  if ($ver[count($ver)-1]>$AÑO) {
+  $UltimoAño= (int) $ver[count($ver)-1];
+  if ($UltimoAño>$AÑO) {
     $AÑO1 = strtotime('+2 year', strtotime($AÑO));
     $MAS = date('Y', $AÑO1);
     $AÑO = $ver[1];
