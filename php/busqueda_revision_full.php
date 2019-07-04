@@ -5,7 +5,7 @@
 		$inicia = 500 * ($index-1);
 		$hasta = 500;
 
-		$sql = mysqli_query($conn, "SELECT * FROM clientes LIMIT $inicia,$hasta");
+		$sql = mysqli_query($conn, "SELECT * FROM clientes  ORDER BY id_cliente LIMIT $inicia,$hasta");
 		$filas = mysqli_num_rows($sql);
 		if ($filas == 0) {
 			# code..

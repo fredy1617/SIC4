@@ -27,7 +27,7 @@ $sql = "INSERT INTO pagos (id_cliente, descripcion, cantidad, fecha, tipo, id_us
 
 if(mysqli_query($conn, $sql)){
   $mensaje2 = '<script>M.toast({html:"El pago se dió de alta satisfcatoriamente.", classes: "rounded"})</script>';
-  $ultimo =  mysqli_fetch_array(mysqli_query($conn, "SELECT MAX(id_pago) AS id FROM pagos"));            
+  $ultimo =  mysqli_fetch_array(mysqli_query($conn, "SELECT MAX(id_pago) AS id FROM pagos WHERE id_cliente = $IdCliente"));            
   $id_pago = $ultimo['id'];
   ?>
   <script>

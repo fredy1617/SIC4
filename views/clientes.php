@@ -15,10 +15,17 @@ if (mysqli_num_rows($sql)>0) {
 	while ($deuda = mysqli_fetch_array($sql)) {
 		$Hasta = $deuda['hasta'];
 		$Tipo = $deuda['tipo'];
+		$Id_deuda = $deuda['id_deuda'];
+		$IdCliente = $deuda['id_cliente'];
+		$Pago = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM pagos WHERE id_deuda= $Id_deuda"));
+		$Id_Pago = $Pago['id_pago'];
 		if ($Hasta >= $Hoy AND $Tipo = 'Mensualidad') {
-			echo "Crear el reporte <br>";	
-			echo "Borrar Pago <br>";
-			echo "Borrar deuda<br>";	
+			if (mysqli_query($conn,"INSERT INTO reportes (id_cliente, descripcion, fecha) VALUES ($IdCliente, 'Cortar servicio, INCUMPLIO EN SU PROMESA DE PAGO.', '$Hoy')")) {
+			echo "El reporte se creo <br>";					
+			}
+			
+			echo "Borrar Pago".$Id_Pago."<br>";
+			echo "Borrar Deuda".$Id_deuda."<br>";	
 		}
 		//mysqli_query($conn, "INSERT INTO ");
 	}
