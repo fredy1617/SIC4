@@ -61,7 +61,6 @@ if(mysqli_num_rows(mysqli_query($conn, "SELECT * FROM pagos WHERE id_cliente = $
       }
       $id_deuda = $Ver['id_deuda'];
      }
-
 		echo '<script>M.toast({html:"El abono se dió de alta satisfcatoriamente.", classes: "rounded"})</script>';
 	  ?>
 	  <script>

@@ -24,10 +24,8 @@ if($area['area']!="Administrador"){
     }
   }
   if(mysqli_query($conn, "DELETE FROM pagos WHERE id_pago = '$IdPago'")){
-    echo '<script >M.toast({html:"Pago Borrado.", classes: "rounded"})</script>';
-    
+    echo '<script >M.toast({html:"Pago Borrado.", classes: "rounded"})</script>'; 
     mysqli_query($conn, "UPDATE clientes SET fecha_corte='$FechaCorte' WHERE id_cliente='$IdCliente'");
-
   }else{
     echo "<script >M.toast({html: 'Ha ocurrido un error.', classes: 'rounded'});</script>";
   }
