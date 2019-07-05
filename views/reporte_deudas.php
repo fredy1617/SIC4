@@ -5,7 +5,6 @@
 <?php
 include ('fredyNav.php');
 include('../php/cobrador.php');
-
 ?>
 </head>
 <body>

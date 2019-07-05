@@ -62,7 +62,12 @@ class PDF extends FPDF{
             $reporte = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM reportes WHERE id_reporte='$id_reporte'"));
 //Buscar Cliente
             $id_cliente = $reporte['id_cliente'];
-            $cliente = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM clientes WHERE id_cliente='$id_cliente'"));
+            $sql = mysqli_query($conn, "SELECT * FROM clientes WHERE id_cliente=$id_cliente");
+            $filas = mysqli_num_rows($sql);
+            if ($filas == 0) {
+                $sql = mysqli_query($conn, "SELECT * FROM especiales WHERE id_cliente=$id_cliente");
+            }
+            $cliente = mysqli_fetch_array($sql);
 //Buscar Comunidad
             $id_comunidad = $cliente['lugar'];
             $sql_comunidad = mysqli_fetch_array(mysqli_query($conn,"SELECT nombre FROM comunidades WHERE id_comunidad='$id_comunidad'"));
