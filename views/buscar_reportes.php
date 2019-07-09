@@ -36,6 +36,13 @@
     while($resultados = mysqli_fetch_array($consulta)) {
       $id_reporte = $resultados['id_reporte'];
       $id_cliente = $resultados['id_cliente'];
+      $id_user=$resultados['registro'];
+      if ($id_user == 0) {
+        $Usuario = "Sistema";
+      }else{
+        $users = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM users WHERE user_id=$id_user"));
+        $Usuario = $users['firstname'];
+      }
       $sql = mysqli_query($conn, "SELECT * FROM clientes WHERE id_cliente=$id_cliente");
       $filas = mysqli_num_rows($sql);
       if ($filas == 0) {
@@ -89,6 +96,7 @@
                     <td>'.$resultados['fecha'].'</td>
                     <td>'.$comunidad['nombre'].'</td>
                     <td>'.$tecnico1[1].'</td>
+                    <td>'.$Usuario.'</td>
                     <td><br><form action="atender_reporte.php" method="post"><input type="hidden" name="id_reporte" value="'.$id_reporte.'"><button type="submit" class="btn-floating btn-tiny waves-effect waves-light pink"><i class="material-icons">send</i></button></form></td>
                     <td><a onclick="ruta('.$id_reporte.');" class="btn btn-floating pink waves-effect waves-light"><i class="material-icons">add</i></a></td>
                     <td><br><form action="editar_reporte.php" method="post"><input type="hidden" name="id_reporte" value="'.$id_reporte.'"><button type="submit" class="btn-floating btn-tiny waves-effect waves-light pink"><i class="material-icons">edit</i></button></form></td>
@@ -105,6 +113,7 @@
                     <td>'.$resultados['fecha'].'</td>
                     <td>'.$comunidad['nombre'].'</td>
                     <td>'.$tecnico1[1].'</td>
+                    <td>'.$Usuario.'</td>
                     <td><br><form action="atender_reporte.php" method="post"><input type="hidden" name="id_reporte" value="'.$id_reporte.'"><button type="submit" class="btn-floating btn-tiny waves-effect waves-light pink"><i class="material-icons">send</i></button></form></td>
                     <td><a onclick="ruta('.$id_reporte.');" class="btn btn-floating pink waves-effect waves-light"><i class="material-icons">add</i></a></td>
                     <td><br><form action="editar_reporte.php" method="post"><input type="hidden" name="id_reporte" value="'.$id_reporte.'"><button type="submit" class="btn-floating btn-tiny waves-effect waves-light pink"><i class="material-icons">edit</i></button></form></td>

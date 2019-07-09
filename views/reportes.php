@@ -82,12 +82,13 @@ include ('../php/cobrador.php');
           <thead>
             <tr>
                 <th>Estatus</th>
-                <th>No.Reporte </th>
+                <th>No.Rep</th>
                 <th>Cliente</th>
                 <th>Descripción</th>
                 <th>Fecha</th>
                 <th>Comunidad</th>
                 <th>Técnico</th>
+                <th>Registró</th>
                 <th>Atender</th>
                 <th>+Ruta</th>
                 <th>Editar</th>

@@ -54,6 +54,10 @@ function insert_paquete() {
             <option value="3M">3 Megas</option>
             <option value="4M">4 Megas</option>
             <option value="5M">5 Megas</option>
+            <option value="6M">6 Megas</option>
+            <option value="7M">7 Megas</option>
+            <option value="8M">8 Megas</option>
+            <option value="9M">9 Megas</option>
             <option value="10M">10 Megas</option>
             <option value="15M">15 Megas</option>
             <option value="20M">20 Megas</option>
@@ -71,6 +75,10 @@ function insert_paquete() {
             <option value="3M">3 Megas</option>
             <option value="4M">4 Megas</option>
             <option value="5M">5 Megas</option>
+            <option value="6M">6 Megas</option>
+            <option value="7M">7 Megas</option>
+            <option value="8M">8 Megas</option>
+            <option value="9M">9 Megas</option>
             <option value="10M">10 Megas</option>
             <option value="15M">15 Megas</option>
             <option value="20M">20 Megas</option>

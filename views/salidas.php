@@ -74,7 +74,6 @@ function salida(imprimir) {
 <main>
 <body>
 <div class="container" id="resultado_dispositivo">
-  Aqi
 </div>
 	<div class="container row">
     <div class="row">
