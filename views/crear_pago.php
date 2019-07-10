@@ -45,23 +45,21 @@ function borrar(IdPago){
 
 function resto_dias(){
   var f = new Date();
-  var dia = 35 - f.getDate();
-  if(dia >30){
-    dia = dia - 30;
-  }
+  var dia = f.getDate();
+
   if(document.getElementById('resto').checked==true){
     M.toast({html: 'Calculando días restantes', classes: 'rounded'});
     
     var MensualidadAux = $("input#cantidadAux").val();
     var Mensualidad = parseInt(MensualidadAux);
-    document.formMensualidad.cantidad.value = "";
+    document.formMensualidad.descuento.value = "";
 
-    document.formMensualidad.cantidad.value = (dia*Mensualidad)/30;  
+    document.formMensualidad.descuento.value = (Mensualidad/31)*dia;  
   }else{
     M.toast({html:"Calculando mensualidad", classes: "rounded"});
     var MensualidadAux = $("input#cantidadAux").val();
     var Mensualidad = parseInt(MensualidadAux);
-    document.formMensualidad.cantidad.value = MensualidadAux;
+    document.formMensualidad.descuento.value = 0;
   }
 }
 
@@ -382,7 +380,7 @@ $Vence = date('Y-m-d', $nuevafecha);
       <div class="row col s12 m3 l3">
         <div class="input-field">
           <i class="material-icons prefix">money_off</i>
-          <input id="descuento" type="number" class="validate" data-length="6" required>
+          <input id="descuento" type="number" class="validate" data-length="6" required value="0">
           <label for="descuento">Descuento ($ 0.00):</label>
         </div>
       </div>      
