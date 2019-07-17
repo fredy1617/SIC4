@@ -41,8 +41,9 @@ include('fredyNav.php');
 			        <th>Nombre</th>
 			        <th>Telefono</th>
 			        <th>Marca</th>
-			        <th>Contraseña</th>
 			        <th>Falla</th>
+			        <th>Observación</th>
+			        <th>Total</th>
 			        <th>Fecha</th>
 			        <th>Estatus</th>
 			      </tr>

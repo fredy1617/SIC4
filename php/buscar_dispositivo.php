@@ -33,10 +33,12 @@
 			$nombre = $resultados['nombre'];
 			$telefono = $resultados['telefono'];
 			$marca = $resultados['marca'];
-			$contra = $resultados['contra'];
 			$falla = $resultados['falla'];
 			$fecha = $resultados['fecha'];
 			$estatus =$resultados['estatus'];
+			$observacion = $resultados['observaciones'];
+			$total = $resultados['total'];
+
 
 			//Output
 			$mensaje .= '			
@@ -45,8 +47,9 @@
 		            <td>'.$nombre.'</td>
 		            <td>'.$telefono.'</td>
 		            <td>'.$marca.'</td>
-		            <td>'.$contra.'</td>
 		            <td>'.$falla.'</td>
+		            <td>'.$observacion.'</td>
+		            <td>'.$total.'</td>
 		            <td>'.$fecha.'</td>
 		            <td>'.$estatus.'</td>           
 		          </tr>';
