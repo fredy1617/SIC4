@@ -44,8 +44,8 @@ include('../php/cobrador.php');
           <th>Nombre</th>
           <th>Telefono</th>
           <th>Marca</th>
-          <th>Color</th>
           <th>Falla</th>
+          <th>Observación</th>
           <th>Cables</th>
           <th>Fecha Entrada</th>
           <th>Técnico</th>

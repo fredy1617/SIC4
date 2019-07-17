@@ -37,10 +37,10 @@ $rutas = mysqli_query($conn, "SELECT * FROM rutas ORDER BY id_ruta DESC limit 6 
 		$Texto = $ruta['tecnicos'];
 		$Tecnicos = explode(",", $Texto);
 		$n=count($Tecnicos);
-		$mas_dias = strtotime('+1 day', strtotime($Hoy));
-		$dosdias = date('Y-m-d', $mas_dias);
 		$fecha_ruta=$ruta['fecha'];
-		if ($Total == $Avance OR $dosdias < $ruta['fecha']) {
+		$mas_dias = strtotime('+1 day', strtotime($fecha_ruta));
+		$dosdias = date('Y-m-d', $mas_dias);
+		if ($Total == $Avance OR $Hoy > $dosdias) {
 			if(mysqli_query($conn, "UPDATE rutas SET estatus = 1  WHERE id_ruta = $id_ruta")){
 			$sql_tmp = mysqli_query($conn,"SELECT * FROM tmp_reportes WHERE ruta = $id_ruta");
 			$columnas = mysqli_num_rows($sql_tmp);
@@ -92,7 +92,7 @@ $rutas = mysqli_query($conn, "SELECT * FROM rutas ORDER BY id_ruta DESC limit 6 
 		          		<li class="red-text darken-2"><?php echo $tecnico; ?></li>
 		          		<?php }?>
 		          	</ul>
-		          	<span class="new badge pink" data-badge-caption=""><?php echo $ruta['fecha']; ?></span>
+		          	<span class="new badge pink" data-badge-caption=""><?php echo $fecha_ruta; ?></span>
 		          </p>
 		        </div>
 		        <div class="card-action">

@@ -34,6 +34,7 @@
 	      $falla = $resultados['falla'];
 	      $cables = $resultados['cables'];
 	      $fecha = $resultados['fecha'];
+	      $observacion = $resultados['observaciones'];
 	      $id_tecnico = $resultados['tecnico'];
 
 	      if($id_tecnico==''){
@@ -49,9 +50,9 @@
 		            <td>'.$id_dispositivo.'</td>
 		            <td><b>'.$nombre.'</b></td>
 		            <td>'.$telefono.'</td>
-		            <td>'.$marca.'</td>
-		            <td>'.$color.'</td>
+		            <td>'.$marca.' '.$color.'</td>
 		            <td>'.$falla.'</td>
+		            <td>'.$observacion.'</td>
 		            <td>'.$cables.'</td>
 		            <td>'.$fecha.'</td>
 		            <td>'.$tecnico[0].'</td>
