@@ -36,6 +36,8 @@
 	      $fecha = $resultados['fecha'];
 	      $observacion = $resultados['observaciones'];
 	      $id_tecnico = $resultados['tecnico'];
+		  $total = $resultados['total'];
+
 
 	      if($id_tecnico==''){
 	          $tecnico[0] = 'Sin tecnico';
@@ -53,6 +55,7 @@
 		            <td>'.$marca.' '.$color.'</td>
 		            <td>'.$falla.'</td>
 		            <td>'.$observacion.'</td>
+		            <td>'.$total.'</td>
 		            <td>'.$cables.'</td>
 		            <td>'.$fecha.'</td>
 		            <td>'.$tecnico[0].'</td>

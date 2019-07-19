@@ -5,9 +5,28 @@
 include('../views/fredyNav.php');
 include('../php/conexion.php');
 $tecnico = $_SESSION['user_id'];
+date_default_timezone_set('America/Mexico_City');
+$Fecha_Hoy = date('Y-m-d');
+$id_reporte = $_POST['id_reporte'];
+$resultado = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM reportes WHERE id_reporte = $id_reporte"));
+$id_cliente = $resultado['id_cliente'];
 ?>
 
 <script>
+function encender(){
+  if(document.getElementById('enciende').checked==true){
+    textoOrden = "Encender";  
+  }else{    
+    textoOrden = "Apagar";
+  }
+  textoIdCliente = <?php echo $id_cliente; ?>;
+  $.post("../php/enciende_apaga.php", { 
+          valorOrden: textoOrden,
+          valorCliente:textoIdCliente,
+  }, function(mensaje) {
+  $("#Orden").html(mensaje);
+  }); 
+}
 function update_reporte() {
     var textoIdReporte = $("input#id_reporte").val();
     var textoFalla = $("textarea#falla").val();
@@ -49,12 +68,12 @@ function update_reporte() {
 <div class="container">
 <?php
 //Cliente, reporte y comunidad
-$id_reporte = $_POST['id_reporte'];
-$resultado = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM reportes WHERE id_reporte = $id_reporte"));
-$id_cliente = $resultado['id_cliente'];
+
 $sql = mysqli_query($conn, "SELECT * FROM clientes WHERE id_cliente=$id_cliente");
 $filas = mysqli_num_rows($sql);
+$esp= "no";
 if ($filas == 0) {
+  $esp="si";
   $sql = mysqli_query($conn, "SELECT * FROM especiales WHERE id_cliente=$id_cliente");
 }
 $cliente = mysqli_fetch_array($sql);
@@ -71,6 +90,7 @@ if($resultado['tecnico']==''){
 ?>
   <h2 class="hide-on-med-and-down">Atender Reporte No.<?php echo $id_reporte;?></h2>
   <h5 class="hide-on-large-only">Atender Reporte No.<?php echo $id_reporte;?></h5>
+  <div id="Orden"></div>
   <div id="resultado_update_reporte">
   </div>
    <div class="row">
@@ -83,7 +103,28 @@ if($resultado['tecnico']==''){
                  <b>Comunidad: </b><?php echo $comunidad['nombre'];?><br>
                  <b>Dirección: </b><?php echo $cliente['direccion'];?><br>
                  <b>Referencia: </b><?php echo $cliente['referencia'];?><br>
-                 <b>IP: </b><a href="http://<?php echo $cliente['ip'];?>" target="_blank"><?php echo $cliente['ip'];?></a>
+                 <b>IP: </b><a href="http://<?php echo $cliente['ip'];?>" target="_blank"><?php echo $cliente['ip'];?></a><br>
+                  <!-- Switch -->
+                 <?php 
+                 if ($esp == "no") {                  
+                   $estado="";
+                   if ($cliente['fecha_corte']>$Fecha_Hoy) {
+                     $estado = "checked";
+                   } 
+                   ?>
+                   <b>Internet: </b> 
+          
+                    <div class="switch right">
+                      <label>
+                        Off
+                        <input type="checkbox" <?php echo $estado; ?> onclick="encender();" id="enciende">
+                        <span class="lever"></span>
+                        On
+                      </label>
+                    </div>
+                  <?php
+                   }
+                  ?>
                  <span class="new badge pink hide-on-med-and-up" data-badge-caption="<?php echo $resultado['fecha'];?>"></span>
                  <br><br><hr>
                  <b>Descripción: </b><?php echo $resultado['descripcion'];?><br>

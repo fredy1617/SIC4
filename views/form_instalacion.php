@@ -22,8 +22,8 @@ function insert_cliente() {
     var textoCerca = $("textarea#cercas").val();    
     var textoEsp = $("textarea#especificacion").val();
     var textoPaquete = $("select#paquete").val();
-    var textoAbono = $("input#abono").val();
-    var textoDescuento = $("input#descuento").val();
+    var textoAnticipo = $("input#Anticipo").val();
+    var textoCostoTotal = $("input#CostoTotal").val();
   
     if (textoNombres == "") {
       M.toast({html: 'El campo Nombre(s) se encuentra vacío.', classes: 'rounded'});
@@ -45,8 +45,8 @@ function insert_cliente() {
       M.toast({html: 'El campo Cerca De se encuentra vacío.', classes: 'rounded'});
     }else if(textoEsp == ""){
       M.toast({html: 'El campo Especificación se encuentra vacío.', classes: 'rounded'});
-    }else if(textoAbono == ""){
-      M.toast({html: 'El campo Abonó se encuentra vacío.', classes: 'rounded'});
+    }else if(textoCostoTotal == "" || textoCostoTotal == 0){
+      M.toast({html: 'El Costo Total se encuentra vacío o en 0.', classes: 'rounded'});
     }else{
       $.post("../php/insert_cliente.php", {
           valorNombres: textoNombres+' '+textoAP+' '+textoAM,
@@ -55,8 +55,8 @@ function insert_cliente() {
           valorDireccion: textoDireccion,
           valorReferencia: 'Casa de color: '+textoColor+', Cercas de '+textoCerca+' ('+textoEsp+')',
           valorPaquete: textoPaquete,
-          valorAbono: textoAbono,
-          valorDescuento: textoDescuento
+          valorAnticipo: textoAnticipo,
+          valorCostoTotal: textoCostoTotal
         }, function(mensaje) {
             $("#resultado_insert_cliente").html(mensaje);
         }); 
@@ -135,8 +135,8 @@ function insert_cliente() {
         </div>
         <div class="input-field">
           <i class="material-icons prefix">monetization_on</i>
-          <input id="descuento" type="number" class="validate" data-length="20" required>
-          <label for="descuento">Descuento:</label>
+          <input id="CostoTotal" type="number" class="validate" data-length="20" required value="0">
+          <label for="CostoTotal">CostoTotal:</label>
         </div>
       </div>
          <!-- AQUI SE ENCUENTRA LA DOBLE COLUMNA EN ESCRITORIO.-->
@@ -156,8 +156,8 @@ function insert_cliente() {
         </div>
         <div class="input-field">
           <i class="material-icons prefix">local_atm</i>
-          <input id="abono" type="number" class="validate" data-length="6" required>
-          <label for="abono">Abonó:</label>
+          <input id="Anticipo" type="number" class="validate" data-length="6" required value="0">
+          <label for="Anticipo">Anticipó:</label>
         </div>
       </div>
     </div>

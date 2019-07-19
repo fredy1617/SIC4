@@ -6,7 +6,6 @@
 include ('fredyNav.php');
 include('../php/conexion.php');
 include('../php/cobrador.php');
-$rutas = mysqli_query($conn, "SELECT * FROM rutas ORDER BY id_ruta DESC limit 6 ");
 ?>
 </head>
 <body>
@@ -16,6 +15,12 @@ $rutas = mysqli_query($conn, "SELECT * FROM rutas ORDER BY id_ruta DESC limit 6 
   			<h5 class="hide-on-large-only">Reporte de Rutas</h5>
 		<a class="waves-effect waves-green btn pink right" href="../views/rutas.php">Todas<i class="material-icons right">done</i></a>	
 		</div>
+		<?php
+		for ($i=0; $i <= 1; $i++) {
+		$inicia=$i*3; 
+
+		$rutas = mysqli_query($conn, "SELECT * FROM rutas ORDER BY id_ruta DESC LIMIT $inicia,3 ");
+		?>
 		<div class="row">
 		<?php
 		date_default_timezone_set('America/Mexico_City');
@@ -25,7 +30,8 @@ $rutas = mysqli_query($conn, "SELECT * FROM rutas ORDER BY id_ruta DESC limit 6 
 	       ?>
             <h5 class="center">No hay rutas</h5>
             <?php                    
-	    } else {		
+	    } else {	
+
 		while($ruta = mysqli_fetch_array($rutas)) {
 		$id_ruta = $ruta['id_ruta'];
 		$instalaciones = mysqli_fetch_array(mysqli_query($conn,"SELECT count(*) FROM tmp_pendientes WHERE ruta_inst = $id_ruta"));
@@ -103,9 +109,12 @@ $rutas = mysqli_query($conn, "SELECT * FROM rutas ORDER BY id_ruta DESC limit 6 
 		</div>
 		<?php
 		}
-		} 
+		}
 		?>
-		</div>	
+		</div>
+		<?php
+		} 
+		?>	
 	</div>
 </body>
 </html>

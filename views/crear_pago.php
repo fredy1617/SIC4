@@ -132,7 +132,7 @@ function insert_pago(tipo) {
       textoCantidad = Mensualidad+50;
       textoDescripcion = textoDescripcion+ " + RECARGO";
     }
-    if (textoDescuento != "") {
+    if (textoDescuento != 0) {
       textoDescripcion = textoDescripcion+" - Descuento: $"+textoDescuento;
     }
   }else if(tipo == 2){
