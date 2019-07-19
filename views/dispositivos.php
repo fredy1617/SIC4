@@ -14,6 +14,13 @@ include('fredyNav.php');
             $("#datos").html(mensaje);
         }); 
 	};
+	function borrar(IdDispositivo){
+	  $.post("../php/regresar_listos.php", { 
+	          valorIdDispocitivo: IdDispositivo,
+	  }, function(mensaje) {
+	  $("#mostrar_pagos").html(mensaje);
+	  }); 
+	}
 </script>
 </head>
 <body onload="buscar();">
@@ -22,7 +29,7 @@ include('fredyNav.php');
 			<br><br>
 			<h3 class="hide-on-med-and-down col s12 m6 l6">Dispositivos:</h3>
       		<h5 class="hide-on-large-only col s12 m6 l6">Dispositivos:</h5>
-
+      		<div id="mostrar_pagos"></div>
       		<form class="col s12 m6 l6">
 		      <div class="row">
 		        <div class="input-field col s12">
@@ -46,6 +53,7 @@ include('fredyNav.php');
 			        <th>Total</th>
 			        <th>Fecha</th>
 			        <th>Estatus</th>
+			        <th></th>
 			      </tr>
 			    </thead>
 			    <tbody id="datos">

@@ -10,10 +10,10 @@
 
 	$mensaje = '';
 
-	$sql = "SELECT * FROM dispositivos WHERE estatus IN ('Listo (En Taller)','Listo (No Reparado)') AND fecha > '2018-01-01'  Limit 50";
+	$sql = "SELECT * FROM dispositivos WHERE estatus IN ('Listo (En Taller)','Listo (No Reparado)') AND fecha > '2019-01-01'  Limit 50";
 
 	if ($Texto != ""){
-		$sql = "SELECT * FROM dispositivos WHERE (id_dispositivo  = '$Texto' OR nombre LIKE '%$Texto%')  AND estatus IN ('Listo (En Taller)','Listo (No Reparado)') AND fecha > '2019-02-01' Limit 20";
+		$sql = "SELECT * FROM dispositivos WHERE (id_dispositivo  = '$Texto' OR nombre LIKE '%$Texto%')  AND estatus IN ('Listo (En Taller)','Listo (No Reparado)') AND fecha > '2019-01-01' Limit 25";
 	}
 
 	$consulta = mysqli_query($conn, $sql);

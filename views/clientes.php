@@ -17,15 +17,24 @@ if (mysqli_num_rows($sql)>0) {
 		$Tipo = $deuda['tipo'];
 		$Id_deuda = $deuda['id_deuda'];
 		$IdCliente = $deuda['id_cliente'];
+		$fecha_corte = mysqli_fetch_array(mysqli_query($conn, 'SELECT * FROM clientes WHERE id_cliente='.$IdCliente));
+		$Fecha = $fecha_corte['fecha_corte'];
+		$nuevafecha = strtotime('-1 month', strtotime($Fecha));
+		$FechaCorte = date('Y-m-05', $nuevafecha);
 		$Pago = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM pagos WHERE id_deuda= $Id_deuda"));
 		$Id_Pago = $Pago['id_pago'];
 		if ($Hasta <= $Hoy AND $Tipo = 'Mensualidad') {
 			#  CREA EL REPORTE.....
 			mysqli_query($conn,"INSERT INTO reportes (id_cliente, descripcion, fecha) VALUES ($IdCliente, 'Cortar servicio, INCUMPLIO EN SU PROMESA DE PAGO.', '$Hoy')");
+
 			#  BORRA EL PAGO.......
-			mysqli_query($conn, "DELETE FROM pagos WHERE id_pago = '$Id_Pago'");
-			#  BORRAR LA DEUDA......
-			mysqli_query($conn, "DELETE FROM deudas WHERE id_deuda = '$Id_deuda'");			
+			if (mysqli_query($conn, "DELETE FROM pagos WHERE id_pago = '$Id_Pago'")) {
+				
+				#  BORRAR LA DEUDA......
+				mysqli_query($conn, "DELETE FROM deudas WHERE id_deuda = '$Id_deuda'");	
+				#  RETRASAR LA FECHA DE CORTE
+				mysqli_query($conn, "UPDATE clientes SET fecha_corte='$FechaCorte' WHERE id_cliente='$IdCliente'");	
+			}			
 		}
 	}
 }
