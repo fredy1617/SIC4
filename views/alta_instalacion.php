@@ -23,6 +23,16 @@ function alta_instalacion_SM(bandera) {
     var textoObservacion = $("textarea#observacion").val();
     var textoIdCliente = $("input#id_cliente").val();  
     var textoTipo = $("select#tipo").val();
+    var textoLiquidar = $("input#liquidar").val();
+    var textoDireccion = $("input#direccion").val();
+    var textoReferencia = $("input#referencia").val();
+    var textoCoordenada = $("input#coordenada").val();
+
+    if(document.getElementById('credito').checked==true){
+      textoTipo_cambio   = "Credito";
+    }else{
+      textoTipo_cambio = "Efectivo";
+    }
 
     if (textoTipo == "") {
       M.toast({html:"Seleccione algun tipo.", classes: "rounded"});
@@ -40,6 +50,11 @@ function alta_instalacion_SM(bandera) {
           valorIdCliente: textoIdCliente,
           valorTecnicos: textoTecnicos,
           valorTipo: textoTipo,
+          valorLiquidar : textoLiquidar,
+          valorTipo_Cambio: textoTipo_cambio,
+          valorDireccion: textoDireccion,
+          valorReferencia: textoReferencia,
+          valorCoordenada: textoCoordenada
         }, function(mensaje) {
             $("#resultado_cliente").html(mensaje);
         }); 
@@ -59,6 +74,16 @@ function alta_instalacion(bandera) {
     var textoMaterial = $("textarea#material").val();
     var textoIdCliente = $("input#id_cliente").val();
     var textoTipo = $("select#tipo").val();
+    var textoLiquidar = $("input#liquidar").val();
+    var textoDireccion = $("input#direccion").val();
+    var textoReferencia = $("input#referencia").val();
+    var textoCoordenada = $("input#coordenada").val();
+
+    if(document.getElementById('credito').checked==true){
+      textoTipo_cambio   = "Credito";
+    }else{
+      textoTipo_cambio = "Efectivo";
+    }
 
     if (textoTipo == "") {
       M.toast({html:"Seleccione algun tipo.", classes: "rounded"});
@@ -75,6 +100,11 @@ function alta_instalacion(bandera) {
           valorIdCliente: textoIdCliente,
           valorTecnicos: textoTecnicos,
           valorTipo: textoTipo,
+          valorLiquidar : textoLiquidar,
+          valorTipo_Cambio: textoTipo_cambio,
+          valorDireccion: textoDireccion,
+          valorReferencia: textoReferencia,
+          valorCoordenada: textoCoordenada
         }, function(mensaje) {
             $("#resultado_cliente").html(mensaje);
         }); 
@@ -107,8 +137,19 @@ function alta_instalacion(bandera) {
               <p><b>Nombre(s): </b><?php echo $datos['nombre'];?><br>
                 <b>Telefono: </b><?php echo $datos['telefono'];?><br>
                  <b>Comunidad: </b><?php echo $comunidad['nombre'];?><br>
-                 <b>Dirección: </b><?php echo $datos['direccion'];?><br>
-                 <b>Paquete: </b> Subida: <?php echo $paquete['subida'];?> | Bajada: <?php echo $paquete['bajada'];?><br>
+                 <div class="col s12">
+                    <b class="col s4 m3 l3">Direccion: </b>
+                    <div class="col s12 m8 l8">
+                      <input id="direccion" type="text" class="validate" value="<?php echo $datos['direccion'];?>">
+                    </div>
+                  </div>
+                  <div class="col s12">
+                    <b class="col s4 m3 l3">Referencia: </b>
+                    <div class="col s12 m8 l8">
+                      <input id="referencia" type="text" class="validate" value="<?php echo $datos['referencia'];?>">
+                    </div>
+                  </div>
+                  <b>Paquete: </b> Subida: <?php echo $paquete['subida'];?> | Bajada: <?php echo $paquete['bajada'];?><br>
                  <b>Total: </b>$<?php echo $datos['total'];?><br>
                  <b>Dejó: </b>$<?php echo $datos['dejo'];?><br>
                  <b>Resta: </b>$<?php echo $datos['total']-$datos['dejo'];?><br>
@@ -137,17 +178,36 @@ function alta_instalacion(bandera) {
               <textarea id="observacion" class="materialize-textarea validate" data-length="150" required></textarea>
               <label for="observacion">Observacion Tecnica:</label>
             </div>
+            <div class="input-field">
+              <i class="material-icons prefix">add_location</i>
+              <input id="coordenada" type="text" class="validate" data-length="15" required>
+              <label for="coordenada">Coordenada:</label>
+            </div>
             </div>
             <!-- AQUI SE ENCUENTRA LA DOBLE COLUMNA EN ESCRITORIO.-->
             <div class="col s12 m6 l6"><br>
-            <input id="id_cliente" type="hidden" class="validate" data-length="200" value="<?php echo $datos['id_cliente'];?>" required><br>
+            <div class="row">
+            <div class="input-field col s8 m9 l9">
+              <i class="material-icons prefix">local_atm</i>
+              <input id="liquidar" type="number" class="validate" data-length="6" required value="<?php echo $datos['total']-$datos['dejo'];?>">
+              <label for="liquidar">Liquidar:</label>
+            </div>
+            <div class="col s4 m3 l3">
+              <p>
+                <br>
+                <input type="checkbox" id="credito"/>
+                <label for="credito">Credito</label>
+              </p>
+            </div>
+            </div>
+            <input id="id_cliente" type="hidden" class="validate" data-length="200" value="<?php echo $datos['id_cliente'];?>" required>
             <div class="input-fiel row">
               <select id="tipo" class="browser-default" required>
                 <option value="" selected>Tipo:</option>
                 <option value="0">Prepago</option>
                 <option value="1">Contrato</option>
               </select>
-            </div><br> 
+            </div><br>
             <label>Técnicos:</label>
                 <p>
                   <?php

@@ -24,6 +24,12 @@ function insert_cliente() {
     var textoPaquete = $("select#paquete").val();
     var textoAnticipo = $("input#Anticipo").val();
     var textoCostoTotal = $("input#CostoTotal").val();
+
+    if(document.getElementById('banco').checked==true){
+      textoTipo = "Banco";
+    }else{
+      textoTipo = "Efectivo";
+    }
   
     if (textoNombres == "") {
       M.toast({html: 'El campo Nombre(s) se encuentra vacío.', classes: 'rounded'});
@@ -56,7 +62,8 @@ function insert_cliente() {
           valorReferencia: 'Casa de color: '+textoColor+', Cercas de '+textoCerca+' ('+textoEsp+')',
           valorPaquete: textoPaquete,
           valorAnticipo: textoAnticipo,
-          valorCostoTotal: textoCostoTotal
+          valorCostoTotal: textoCostoTotal,
+          valorTipo: textoTipo
         }, function(mensaje) {
             $("#resultado_insert_cliente").html(mensaje);
         }); 
@@ -154,10 +161,19 @@ function insert_cliente() {
           <textarea id="especificacion" class="materialize-textarea validate" data-length="150" required></textarea>
           <label for="especificacion">Especificación: ej. (Dos pisos, Porton blanco)</label>
         </div>
-        <div class="input-field">
+        <div class="row">
+        <div class="input-field col s8 m9 l9">
           <i class="material-icons prefix">local_atm</i>
           <input id="Anticipo" type="number" class="validate" data-length="6" required value="0">
           <label for="Anticipo">Anticipó:</label>
+        </div>
+        <div class="col s4 m3 l3">
+          <p>
+            <br>
+            <input type="checkbox" id="banco"/>
+            <label for="banco">Banco</label>
+          </p>
+        </div>
         </div>
       </div>
     </div>

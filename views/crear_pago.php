@@ -304,35 +304,35 @@ $Vence = date('Y-m-d', $nuevafecha);
       <div class="row">
       <form class="col s12" name="formMensualidad">
       <div class="row">
-        <div class="col s12 m2 l2">
+        <div class="col s6 m2 l2">
           <p>
             <br>
             <input type="checkbox" onclick="promo();" id="todos"/>
             <label for="todos">Promoción anual</label>
           </p>
         </div>
-        <div class="col s12 m3 l3">
+        <div class="col s6 m3 l3">
           <p>
             <br>
             <input type="checkbox" onclick="resto_dias();" id="resto"/>
             <label for="resto">Calcular días restantes</label>
           </p>
         </div>
-        <div class="col s12 m2 l2">
+        <div class="col s6 m2 l2">
           <p>
             <br>
             <input type="checkbox" id="banco"/>
             <label for="banco">Banco</label>
           </p>
         </div>
-        <div class="col s12 m2 l2">
+        <div class="col s6 m2 l2">
           <p>
             <br>
             <input type="checkbox" id="credito"/>
             <label for="credito">Credito</label>
           </p>
         </div>
-        <div class="col s12 m3 l3" >
+        <div class="col s6 m3 l3" >
               <label for="hasta">Fecha de Promesa:</label>
               <input id="hasta" type="date">    
         </div>
