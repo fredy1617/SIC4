@@ -75,6 +75,7 @@ class PDF extends FPDF{
             $this->MultiCell(194,4, utf8_decode('TELÉFONO: '.$cliente['telefono']),0,'L',false);
             $this->MultiCell(194,4, utf8_decode('DIRECCIÓN: '.$cliente['direccion']),0,'L',false);
             $this->MultiCell(194,4, utf8_decode('LUGAR: '.$sql_comunidad['nombre']),0,'L',false);
+            $this->MultiCell(194,4, utf8_decode('COORDENADAS: '.$cliente['coordenadas']),0,'L',false);
             $this->MultiCell(194,4, utf8_decode('REFERENCIA: '.$cliente['referencia']),0,'L',false);
             $this->MultiCell(194,4, utf8_decode('DESCRIPCIÓN DEL REPORTE: '.$reporte['descripcion']),0,'L',false);
             $this->MultiCell(194,4, utf8_decode('FECHA DE REPORTE: '.$reporte['fecha']),0,'L',false);

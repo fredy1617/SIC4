@@ -4,7 +4,7 @@
 	<title>SIC | Cajas</title>
 <?php
 include ('fredyNav.php');
-include ('../php/admin.php');
+include ('../php/superAdmin.php');
 ?>
 </head>
 <body>

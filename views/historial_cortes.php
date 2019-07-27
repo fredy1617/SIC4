@@ -6,7 +6,7 @@
 	include('fredyNav.php');
 	include('../php/conexion.php');
   include('../php/cobrador.php');
- 	include('../php/admin.php');
+ 	include('../php/superAdmin.php');
 ?>
 <script>
   function buscar_corte() {
