@@ -138,14 +138,14 @@ function alta_instalacion(bandera) {
                 <b>Telefono: </b><?php echo $datos['telefono'];?><br>
                  <b>Comunidad: </b><?php echo $comunidad['nombre'];?><br>
                  <div class="col s12">
-                    <b class="col s4 m3 l3">Direccion: </b>
-                    <div class="col s12 m8 l8">
+                    <b class="col s4 m2 l2">Direccion: </b>
+                    <div class="col s12 m9 l9">
                       <input id="direccion" type="text" class="validate" value="<?php echo $datos['direccion'];?>">
                     </div>
                   </div>
                   <div class="col s12">
-                    <b class="col s4 m3 l3">Referencia: </b>
-                    <div class="col s12 m8 l8">
+                    <b class="col s4 m2 l2">Referencia: </b>
+                    <div class="col s12 m9 l9">
                       <input id="referencia" type="text" class="validate" value="<?php echo $datos['referencia'];?>">
                     </div>
                   </div>

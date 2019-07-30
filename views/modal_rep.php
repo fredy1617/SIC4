@@ -1,10 +1,15 @@
 <?php
 include('../php/conexion.php');
 date_default_timezone_set('America/Mexico_City');
+
+
+$Nombre = $conn->real_escape_string($_POST['valorNombre']);
+$Telefono = $conn->real_escape_string($_POST['valorTelefono']);
+$Direccion = $conn->real_escape_string($_POST['valorDireccion']);
 $Referencia = $conn->real_escape_string($_POST['valorReferencia']);
+$Coordenadas = $conn->real_escape_string($_POST['valorCoordenada']);
 $Descripcion = $conn->real_escape_string($_POST['valorDescripcion']);
 $IdCliente = $conn->real_escape_string($_POST['valorIdCliente']);
-$no_cliente=$IdCliente;
 
 $reporte_ant=mysqli_query($conn, "SELECT * FROM reportes WHERE id_cliente = $IdCliente ORDER by id_reporte DESC
 LIMIT 1");
@@ -16,11 +21,19 @@ LIMIT 1");
  });
 
  function instertar_reporte(){
-    var texoReferencia = $("input#referencia").val();
+    var textoNombre = $("input#nombres").val();
+    var textoTelefono = $("input#telefono").val();
+    var textoDireccion = $("input#direccion").val();
+    var textoReferencia = $("input#referencia").val();
+    var textoCoordenadas = $("input#coordenadas").val();
     var textoDescripcion = $("input#descripcion").val();
     var textoIdCliente = $("input#id_cliente").val();
     $.post("../php/insert_reporte.php", {
-          valorReferencia: texoReferencia,
+          valorNombre: textoNombre,
+          valorTelefono: textoTelefono,
+          valorDireccion: textoDireccion,
+          valorReferencia: textoReferencia,
+          valorCoordenada: textoCoordenadas,
           valorDescripcion: textoDescripcion,
           valorIdCliente: textoIdCliente 
         }, function(mensaje) {
@@ -95,13 +108,17 @@ LIMIT 1");
     </div>
     <div class="modal-footer">
       <form name="formMensualidad">
+        <input id="nombres" name="nombres" type="hidden" value="<?php echo $Nombre ?>">
+        <input id="telefono" name="telefono" type="hidden" value="<?php echo $Telefono ?>">
+        <input id="direccion" name="direccion" type="hidden" value="<?php echo $Direccion ?>">
         <input id="referencia" name="referencia" type="hidden" value="<?php echo $Referencia ?>">
+        <input id="coordenadas" name="coordenadas" type="hidden" value="<?php echo $Coordenadas ?>">
         <input id="descripcion" name="descripcion" type="hidden" value="<?php echo $Descripcion ?>">
         <input id="id_cliente" name="id_cliente" type="hidden" value="<?php echo $IdCliente ?>">
       </form>
       <a onclick="instertar_reporte();" class="modal-close waves-effect waves-light btn green accent-4 "><b>Continuar</b></a>
 
-      <form method="post" action="../views/form_reportes.php"><input id="no_cliente" name="no_cliente" type="hidden" value="<?php echo $no_cliente ?>"><button class="btn waves-effect red accent-4 waves-light" type="submit" name="action">
+      <form method="post" action="../views/form_reportes.php"><input id="no_cliente" name="no_cliente" type="hidden" value="<?php echo $IdCliente ?>"><button class="btn waves-effect red accent-4 waves-light" type="submit" name="action">
       <b>Cancelar</b>
       </button></form>
     </div>

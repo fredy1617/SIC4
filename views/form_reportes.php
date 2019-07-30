@@ -6,7 +6,11 @@ include('fredyNav.php');
 ?>
 <script>
   function verificar_reporte() {  
-    var texoReferencia = $("textarea#referencia").val();
+    var textoNombre = $("input#nombres").val();
+    var textoTelefono = $("input#telefono").val();
+    var textoDireccion = $("input#direccion").val();
+    var textoReferencia = $("input#referencia").val();
+    var textoCoordenadas = $("input#coordenadas").val();
     var textoDescripcion = $("textarea#descripcion").val();
     var textoIdCliente = $("input#id_cliente").val();
 
@@ -14,25 +18,17 @@ include('fredyNav.php');
       M.toast({html:"El campo descripción no puede estar vacío.", classes: "rounded"})
     }else{
       $.post("modal_rep.php", {
-          valorReferencia: texoReferencia,
+          valorNombre: textoNombre,
+          valorTelefono: textoTelefono,
+          valorDireccion: textoDireccion,
+          valorReferencia: textoReferencia,
+          valorCoordenada: textoCoordenadas,
           valorDescripcion: textoDescripcion,
           valorIdCliente: textoIdCliente 
         }, function(mensaje) {
             $("#Continuar").html(mensaje);
         });
     }
-  };
-  function instertar_reporte(){
-    var texoReferencia = $("input#referencia").val();
-    var textoDescripcion = $("input#descripcion").val();
-    var textoIdCliente = $("input#id_cliente").val();
-    $.post("../php/insert_reporte.php", {
-          valorReferencia: texoReferencia,
-          valorDescripcion: textoDescripcion,
-          valorIdCliente: textoIdCliente 
-        }, function(mensaje) {
-            $("#mostrar_pagos").html(mensaje);
-    });
   };
 </script>
 
@@ -55,20 +51,50 @@ $id_comunidad = $datos['lugar'];
 $comunidad = mysqli_fetch_array(mysqli_query($conn, "SELECT nombre FROM comunidades WHERE id_comunidad='$id_comunidad'"));
 
 ?>
-<div class="container" id="Continuar">
-  <h4>Creando Reporte para el cliente:</h4>
-
+<div class="container row" id="Continuar" >
+  <div class="row" >
+      <h3 class="hide-on-med-and-down">Creando Reporte para el cliente:</h3>
+      <h5 class="hide-on-large-only">Creando Reporte para el cliente:</h5>
+      </div>
   <div id="resultado_insert_pago">
   </div>
   <ul class="collection">
     <li class="collection-item avatar">
       <img src="../img/cliente.png" alt="" class="circle">
-      <span class="title"><b>No. Cliente: </b><?php echo $datos['id_cliente'];?></span>
-      <p><b>Nombre(s): </b><?php echo $datos['nombre'];?><br>
-        <b>Telefono: </b><?php echo $datos['telefono'];?><br>
+      <span class="title">
+        <b>No. Cliente: </b><?php echo $datos['id_cliente'];?></span>
+          <br>
+         <div class="col s12"><br>
+          <b class="col s4 m2 l2">Nombre(s):  </b>
+          <div class="col s12 m9 l9">
+          <input id="nombres" type="text" class="validate" value="<?php echo $datos['nombre'];?>">
+          </div>
+         </div>
+         <div class="col s12">
+          <b class="col s4 m2 l2">Telefono:  </b>
+          <div class="col s12 m9 l9">
+          <input id="telefono" type="text" class="validate" value="<?php echo $datos['telefono'];?>">
+          </div>
+         </div>
+         <div class="col s12">
+          <b class="col s4 m2 l2">Direccion: </b>
+          <div class="col s12 m9 l9">
+          <input id="direccion" type="text" class="validate" value="<?php echo $datos['direccion'];?>">
+          </div>
+         </div>
+         <div class="col s12">
+          <b class="col s4 m2 l2">Referencia: </b>
+          <div class="col s12 m9 l9">
+            <input id="referencia" type="text" class="validate" value="<?php echo $datos['referencia'];?>">
+          </div>
+         </div>
+         <div class="col s12">
+          <b class="col s4 m2 l2">Coordenadas: </b>
+          <div class="col s12 m9 l9">
+            <input id="coordenadas" type="text" class="validate" value="<?php echo $datos['coordenadas'];?>">
+          </div>
+         </div><br>
          <b>Comunidad: </b><?php echo $comunidad['nombre'];?><br>
-         <b>Dirección: </b><?php echo $datos['direccion'];?><br>
-         <b>Referencia: </b><?php echo $datos['referencia'];?><br>
          <b>Fecha de Instalación: </b><?php echo $datos['fecha_instalacion'];?><br> 
          <span class="new badge pink hide-on-med-and-up" data-badge-caption="ACTIVO"></span><br>
 
@@ -82,15 +108,13 @@ $comunidad = mysqli_fetch_array(mysqli_query($conn, "SELECT nombre FROM comunida
       <form class="col s12" name="formMensualidad">
       <br>
       <div class="row">
-        <div class="input-field col s12 m6 l6">
-          <i class="material-icons prefix">comment</i>
-          <textarea id="referencia" class="materialize-textarea validate" data-length="150" required></textarea>
-          <label for="referencia">Referencia: </label>
+        <div class="col s1">
+          <br>
         </div>
-        <div class="input-field col s12 m6 l6">
+        <div class="input-field col s12 m10 l10">
           <i class="material-icons prefix">description</i>
           <textarea id="descripcion" class="materialize-textarea validate" data-length="200"></textarea>
-          <label for="descripcion">Descripción:</label>
+          <label for="descripcion">Descripción de Reporte:</label>
         </div>
       </div>
       <input id="id_cliente" value="<?php echo htmlentities($datos['id_cliente']);?>" type="hidden">
