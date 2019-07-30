@@ -30,24 +30,51 @@ while($usuario = mysqli_fetch_array($usuarios)){
         <th>Fecha</th>
         <th>Hora</th>
         <th>Técnicos</th>
+        <th>Se Pago</th>
       </tr>
     </thead>
     <tbody>
       <?php
-      $resultado_instalaciones = mysqli_query($conn,"SELECT * FROM clientes WHERE fecha_instalacion>='$ValorDe' AND fecha_instalacion<='$ValorA' AND  tecnico LIKE '%$user%'");
+      $resultado_instalaciones = mysqli_query($conn,"SELECT * FROM clientes WHERE fecha_instalacion>='$ValorDe' AND fecha_instalacion<='$ValorA' AND  tecnico LIKE '%$user%' ORDER BY fecha_instalacion");
       $aux = mysqli_num_rows($resultado_instalaciones);
       if($aux>0){
       while($instalaciones = mysqli_fetch_array($resultado_instalaciones)){
         $id_comunidad = $instalaciones['lugar'];
         $comunidad = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM comunidades WHERE id_comunidad = '$id_comunidad'"));
+        $id_cliente = $instalaciones['id_cliente'];
+        $Total = $instalaciones['total'];
+        $Anticipo = mysqli_query($conn,"SELECT * FROM pagos WHERE id_cliente = '$id_cliente' AND tipo = 'Anticipo'");
+        $Entra = "No";
+        $Estatus = "Revisar";
+        if (mysqli_num_rows($Anticipo)>0) {
+          $Pago = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM pagos WHERE id_cliente = '$id_cliente' AND tipo = 'Anticipo'"));
+          $Anti = $Pago['cantidad'];
+          if ($Anti == $Total) {
+            $Estatus = "Oficina";
+          }else{
+            $Entra = "Si";
+          }
+        }else{
+          $Entra = "Si";
+        }
+        if ($Entra == "Si") {
+          $Liquido = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM pagos WHERE id_cliente = '$id_cliente' AND tipo = 'Liquidacion'"));
+          $Tipo_Cambio = $Liquido['tipo_cambio'];
+          if ($Tipo_Cambio == "Efectivo") {
+            $Estatus = "Domicilio";
+          }else if ($Tipo_Cambio == "Credito") {
+            $Estatus =$Tipo_Cambio;
+          }
+        }
         ?>
         <tr>
-          <td><b><?php echo $instalaciones['id_cliente'];?></b></td>
+          <td><b><?php echo $id_cliente;?></b></td>
           <td><?php echo $instalaciones['nombre'];?></td>
           <td><?php echo $comunidad['nombre'];?></td>
           <td><?php echo $instalaciones['fecha_instalacion'];?></td>
           <td><?php echo $instalaciones['hora_alta']; ?></td>
           <td><?php echo $instalaciones['tecnico'];?></td>
+          <td><?php echo $Estatus; ?></td>
         </tr>
       <?php
         $aux--;

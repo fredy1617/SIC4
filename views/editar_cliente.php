@@ -23,6 +23,8 @@ function update_cliente() {
     var textoPaquete = $("select#paquete").val();
     var textoIP = $("input#ip").val();
     var textoTipo = $("select#tipo").val();
+    var textoCoordenada = $("input#coordenada").val();
+
   
     if (textoNombres == "") {
       M.toast({html: "El campo Nombre(s) se encuentra vacío.", classes: "rounded"});
@@ -50,6 +52,7 @@ function update_cliente() {
           valorIP: textoIP,
           valorFechaCorte: textoFechaCorte,
           valorTipo: textoTipo,
+          valorCoordenada: textoCoordenada
         }, function(mensaje) {
             $("#resultado_update_cliente").html(mensaje);
         }); 
@@ -97,7 +100,8 @@ $paquete_cliente = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM paquete
           <label for="telefono">Teléfono:</label>
         </div>
         <div class="row">
-      <label><i class="material-icons">location_on</i>Comunidad:</label>
+        <div class="col s12 m6 l6">
+        <label><i class="material-icons">location_on</i>Comunidad:</label>
         <div class="input-field">
           <select id="comunidad" class="browser-default" required>
             <option value="<?php echo $comunidad['id_comunidad'];?>" selected><?php echo $comunidad['nombre'];?> - $<?php echo $comunidad['instalacion'];?></option>
@@ -111,6 +115,14 @@ $paquete_cliente = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM paquete
             ?>
           </select>
         </div>
+      </div>
+      <div class="col s12 m6 l6"><br>
+        <div class="input-field">
+              <i class="material-icons prefix">add_location</i>
+              <input id="coordenada" type="text" class="validate" data-length="15" required>
+              <label for="coordenada">Coordenada:</label>
+            </div>
+      </div>
       </div>
         <div class="input-field">
           <i class="material-icons prefix">location_on</i>

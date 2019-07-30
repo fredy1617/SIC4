@@ -11,5 +11,4 @@ if($area['area']=="Administrador" and ($area['user_id'] == 10 or $area['user_id'
 	mysqli_close($conn);
 	exit;
 }
-
 ?>

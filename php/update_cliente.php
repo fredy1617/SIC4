@@ -11,6 +11,7 @@ $Paquete = $conn->real_escape_string($_POST['valorPaquete']);
 $IP = $conn->real_escape_string($_POST['valorIP']);
 $FechaCorte = $conn->real_escape_string($_POST['valorFechaCorte']);
 $Tipo = $conn->real_escape_string($_POST['valorTipo']);
+$Coordenada = $conn->real_escape_string($_POST['valorCoordenada']);
 
 
 //Variable vacía (para evitar los E_NOTICE)
@@ -22,9 +23,9 @@ if(filter_var($IP, FILTER_VALIDATE_IP)){
 		$Contratro = 1;
 		$Prepago = 0;		
 	}
-	$sql = "UPDATE clientes SET nombre = '$Nombres', telefono = '$Telefono', lugar = '$Comunidad', direccion = '$Direccion', referencia = '$Referencia', paquete = '$Paquete', ip = '$IP', fecha_corte = '$FechaCorte', contrato = '$Contratro', Prepago = '$Prepago' WHERE id_cliente = $IdCliente ";
+	$sql = "UPDATE clientes SET nombre = '$Nombres', telefono = '$Telefono', lugar = '$Comunidad', direccion = '$Direccion', referencia = '$Referencia', paquete = '$Paquete', ip = '$IP', fecha_corte = '$FechaCorte', coordenadas = '$Coordenada', contrato = '$Contratro', Prepago = '$Prepago' WHERE id_cliente = $IdCliente ";
 	if ($Tipo == "") {
-	$sql = "UPDATE clientes SET nombre = '$Nombres', telefono = '$Telefono', lugar = '$Comunidad', direccion = '$Direccion', referencia = '$Referencia', paquete = '$Paquete', ip = '$IP', fecha_corte = '$FechaCorte' WHERE id_cliente = $IdCliente";
+	$sql = "UPDATE clientes SET nombre = '$Nombres', telefono = '$Telefono', lugar = '$Comunidad', direccion = '$Direccion', referencia = '$Referencia', paquete = '$Paquete', ip = '$IP', fecha_corte = '$FechaCorte', coordenadas = '$Coordenada' WHERE id_cliente = $IdCliente";
 	}
 	
 	if(mysqli_query($conn, $sql)){
