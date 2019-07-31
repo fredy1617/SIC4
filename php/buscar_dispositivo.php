@@ -52,12 +52,11 @@
 		            <td>'.$total.'</td>
 		            <td>'.$fecha.'</td>
 		            <td>'.$estatus.'</td> 
-		            <td><a onclick="borrar('.$id_dispositivo.');" class="btn btn-floating red darken-1 waves-effect waves-light"><i class="material-icons">reply</i></a></td>        
+		            <td><a onclick="regresa('.$id_dispositivo.');" class="btn btn-floating red darken-1 waves-effect waves-light"><i class="material-icons">reply</i></a></td>        
 		          </tr>';
 
 		}//Fin while $resultados
 	} //Fin else $filas
-
 
 //Devolvemos el mensaje que tomará jQuery
 echo $mensaje;

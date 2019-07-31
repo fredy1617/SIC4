@@ -38,7 +38,6 @@
 	      $id_tecnico = $resultados['tecnico'];
 		  $total = $resultados['total'];
 
-
 	      if($id_tecnico==''){
 	          $tecnico[0] = 'Sin tecnico';
 	        }else{
@@ -60,6 +59,7 @@
 		            <td>'.$fecha.'</td>
 		            <td>'.$tecnico[0].'</td>
 		            <td><form method="post" action="../php/Salida_SerTec.php" target="blank"><input id="id_dispositivo" name="id_dispositivo" type="hidden" value="'. $id_dispositivo.'"><button class="btn-floating btn-tiny waves-effect waves-light pink"><i class="material-icons">exit_to_app</i></button></form></td>
+		             <td><a onclick="almacen('.$id_dispositivo.');" class="btn btn-floating pink  waves-effect waves-light"><i class="material-icons">dashboard</i></a></td>
 		          </tr>';
 		        
 		}//Fin while $resultados

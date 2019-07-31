@@ -15,12 +15,20 @@ include('../php/cobrador.php');
         }, function(mensaje) {
             $("#datos").html(mensaje);
         }); 
-};
+  };
+  function almacen(IdDispositivo){
+    $.post("../php/ir_almacen.php", { 
+            valorIdDispocitivo: IdDispositivo,
+    }, function(mensaje) {
+    $("#mostrar_resp").html(mensaje);
+    }); 
+  };
 </script>
 <!--Termina script dispositivos-->
 </head>
 <main>
 <body onload="buscar();">
+<div  id="mostrar_resp"></div>
 <div class="container">
   <div class="row">
   <br><br>
@@ -51,6 +59,7 @@ include('../php/cobrador.php');
           <th>Fecha Entrada</th>
           <th>Técnico</th>
           <th>Salida</th>
+          <th>Almacen</th>
       </tr>
     </thead>
     <tbody id="datos">

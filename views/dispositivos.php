@@ -14,13 +14,13 @@ include('fredyNav.php');
             $("#datos").html(mensaje);
         }); 
 	};
-	function borrar(IdDispositivo){
+	function regresa(IdDispositivo){
 	  $.post("../php/regresar_listos.php", { 
 	          valorIdDispocitivo: IdDispositivo,
 	  }, function(mensaje) {
 	  $("#mostrar_pagos").html(mensaje);
 	  }); 
-	}
+	};
 </script>
 </head>
 <body onload="buscar();">
