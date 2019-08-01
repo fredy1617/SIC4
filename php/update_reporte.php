@@ -10,6 +10,18 @@ $Fecha_visita = $conn->real_escape_string($_POST['valorFecha']);
 $FechaAtendido = date('Y-m-d');
 $Hora = date('h:i:s');
 
+$IdCliente = $conn->real_escape_string($_POST['valorIdCliente']);
+$Nombre = $conn->real_escape_string($_POST ['valorNombre']);
+$Telefono = $conn->real_escape_string($_POST['valorTelefono']);
+$Direccion = $conn->real_escape_string($_POST['valorDierccion']);
+$Referencia = $conn->real_escape_string($_POST['valorReferencia']);
+
+  
+$sql2= "UPDATE clientes SET nombre = '$Nombre', telefono = '$Telefono', direccion = '$Direccion', referencia='$Referencia' WHERE id_cliente=$IdCliente ";
+if (mysqli_query($conn, $sql2)) {
+  echo  '<script>M.toast({html:"Información actualizada.", classes: "rounded"})</script>';
+}
+
 if($Atendido == 'Sí'){
 	$Atendido = '1';	
 	$Atender_Visita = '1';

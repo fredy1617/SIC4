@@ -28,11 +28,17 @@ function encender(){
   }); 
 }
 function update_reporte() {
+    var textoNombre = $("input#nombres").val();
+    var textoTelefono = $("input#telefono").val();
+    var textoDireccion = $("input#direccion").val();
+    var textoReferencia = $("input#referencia").val();
     var textoIdReporte = $("input#id_reporte").val();
     var textoFalla = $("textarea#falla").val();
     var textoSolucion = $("textarea#solucion").val();
     var textoAtendido = $("select#atendido").val();
     var textoFecha = $("input#fecha_visita").val();
+    var textoIdCliente = $("input#id_cliente").val();
+
     entra = "Si";
     textoTecnico = <?php echo $tecnico;?>;
     if(document.getElementById('visita').checked==true){
@@ -49,6 +55,11 @@ function update_reporte() {
       M.toast({html:"El campo Falla no puede ir vacío.",classes: "rounded"});
     }else{ if ( entra == "Si") {
       $.post("../php/update_reporte.php", {
+          valorIdCliente: textoIdCliente,
+          valorNombre: textoNombre,
+          valorTelefono:textoTelefono,
+          valorDierccion:textoDireccion,
+          valorReferencia: textoReferencia,
           valorIdReporte: textoIdReporte,
           valorFalla: textoFalla,
           valorSolucion: textoSolucion,
@@ -97,12 +108,34 @@ if($resultado['tecnico']==''){
    <ul class="collection">
             <li class="collection-item avatar">
               <img src="../img/cliente.png" alt="" class="circle">
-              <span class="title"><b>No. Cliente: </b><?php echo $cliente['id_cliente'];?></span>
-              <p ><b>Nombre(s): </b><?php echo $cliente['nombre'];?><br>
-                <b>Telefono: </b><?php echo $cliente['telefono'];?><br>
+              <span class="title"><b>No. Cliente: </b><?php echo $cliente['id_cliente'];?></span><br>
+              <div class="col s12"><br>
+                <b class="col s4 m2 l2">Nombre(s): </b>
+                <div class="col s12 m9 l9">
+                  <input type="text" id="nombres" name="nombres" value="<?php echo $cliente['nombre']; ?>">
+                </div>
+              </div>
+              <div class="col s12">
+                <b class="col s4 m2 l2">Telefono: </b>
+                <div class="col s12 m9 l9">
+                  <input type="text" id="telefono" name="telefono" value="<?php echo $cliente['telefono'];?>">
+                </div>
+              </div>
+              <div class="col s12">
+                <b class="col s4 m2 l2">Direccion: </b>
+                <div class="col s12 m9 l9">
+                  <input type="text" id="direccion" name="direccion" value="<?php echo $cliente['direccion'];?>">
+                </div>
+              </div>
+              <div class="col s12">
+                <b class="col s4 m2 l2">Referencia: </b>
+                <div class="col s12 m9 l9">
+                  <input type="text" id="referencia" name="referencia" value="<?php echo $cliente['referencia'];?>">
+                </div>
+              </div>
+
                  <b>Comunidad: </b><?php echo $comunidad['nombre'];?><br>
-                 <b>Dirección: </b><?php echo $cliente['direccion'];?><br>
-                 <b>Referencia: </b><?php echo $cliente['referencia'];?><br>
+                 
                  <b>IP: </b><a href="http://<?php echo $cliente['ip'];?>" target="_blank"><?php echo $cliente['ip'];?></a><br>
                   <!-- Switch -->
                  <?php 
@@ -128,7 +161,7 @@ if($resultado['tecnico']==''){
                  <span class="new badge pink hide-on-med-and-up" data-badge-caption="<?php echo $resultado['fecha'];?>"></span>
                  <br><br><hr>
                  <b>Descripción: </b><?php echo $resultado['descripcion'];?><br>
-              </p>
+              
               <a href="#!" class="secondary-content hide-on-small-only"><span class="new badge pink" data-badge-caption="<?php echo $resultado['fecha'];?>"></span></a>
             </li>
         </ul>
@@ -174,11 +207,12 @@ if($resultado['tecnico']==''){
           <select id="atendido" class="browser-default col s10" required>
             <option selected disabled="">¿Listo?</option>
             <option value="No">No</option>
-            <option value="Sí">Sí</option>            
+            <option value="Sí">Sí</option> 
           </select>
         </div>
         </div>
         </div>
+        <input id="id_cliente" value="<?php echo htmlentities($cliente['id_cliente']);?>" type="hidden">
 </form>
       <a onclick="update_reporte();" class="waves-effect waves-light btn pink right"><i class="material-icons right">send</i>ACTUALIZAR REPORTE</a>    
   </div> 
