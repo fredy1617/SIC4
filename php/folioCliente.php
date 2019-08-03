@@ -15,6 +15,8 @@ class PDF extends FPDF{
         $listado = mysqli_query($enlace, "SELECT * FROM clientes WHERE id_cliente='$id'");
         $num_filas = mysqli_num_rows($listado);
         $fila = mysqli_fetch_array($listado);
+        $id_comunidad = $fila['lugar'];
+        $comunidad = mysqli_fetch_array(mysqli_query($enlace, "SELECT * FROM comunidades WHERE id_comunidad='$id_comunidad'"));
         
         // Colores de los bordes, fondo y texto
         $this->SetFillColor(255,255,255);
@@ -46,7 +48,7 @@ class PDF extends FPDF{
         $this->MultiCell(70,4,utf8_decode('TEL. CLIENTE: '.$fila['telefono']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
-        $this->MultiCell(70,4,utf8_decode('LUGAR: '.$fila['lugar']),0,'L',true);
+        $this->MultiCell(70,4,utf8_decode('LUGAR: '.$comunidad['nombre']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
         $this->MultiCell(70,4,utf8_decode('REFERENCIA: '.$fila['referencia']),0,'L',true);

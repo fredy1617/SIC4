@@ -22,8 +22,8 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<h3 class="hide-on-med-and-down">Contratos Pago Vencido</h3>	
-			<h5 class="hide-on-large-only">Contratos Pago Vencido</h5>		
+			<h3 class="hide-on-med-and-down">Contratos Internet</h3>	
+			<h5 class="hide-on-large-only">Contratos Internet</h5>		
 		</div>
 		<div class="row" id="insertar_reporte">
 			<table class="bordered  highlight responsive-table">

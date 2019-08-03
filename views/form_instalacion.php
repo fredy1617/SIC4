@@ -11,6 +11,16 @@ include('../php/cobrador.php');
 }
 </style>
 <script>
+    function showContent() {
+        element = document.getElementById("content");
+        if (document.getElementById('IntyTel').checked==true || document.getElementById('Internet').checked==true) {
+            element.style.display='block';
+        }
+        else {
+            element.style.display='none';
+        }
+        
+    }
 function insert_cliente() {
     var textoNombres = $("input#nombres").val();
     var textoAM = $("input#apellido-M").val();
@@ -24,11 +34,22 @@ function insert_cliente() {
     var textoPaquete = $("select#paquete").val();
     var textoAnticipo = $("input#Anticipo").val();
     var textoCostoTotal = $("input#CostoTotal").val();
+    var textoTipoInst = $("select#tipo").val();
 
     if(document.getElementById('banco').checked==true){
       textoTipo = "Banco";
     }else{
       textoTipo = "Efectivo";
+    }
+    Entra = "Si";
+    if (document.getElementById('IntyTel').checked==true) {
+      textoServicio = "Internet y Telefonia";
+      if (textoTipoInst == "") {Entra = "No";}
+    }else if(document.getElementById('Internet').checked==true){
+      textoServicio = "Internet";
+      if (textoTipoInst == "") {Entra = "No";}      
+    }else if(document.getElementById('Telefonia').checked==true){
+      textoServicio = "Telefonia";
     }
   
     if (textoNombres == "") {
@@ -45,6 +66,8 @@ function insert_cliente() {
       M.toast({html: 'No se ha seleccionado un paquete de internet aún.', classes: 'rounded'});
     }else if(textoDireccion == ""){
       M.toast({html: 'El campo Dirección se encuentra vacío.', classes: 'rounded'});
+    }else if (document.getElementById('IntyTel').checked==false && document.getElementById('Internet').checked==false && document.getElementById('Telefonia').checked==false ) {
+      M.toast({html: 'Elige una opcion de Internet o Telefonia.', classes: 'rounded'});
     }else if(textoColor == ""){
       M.toast({html: 'El campo Color se encuentra vacío.', classes: 'rounded'});
     }else if(textoCerca == ""){
@@ -53,6 +76,8 @@ function insert_cliente() {
       M.toast({html: 'El campo Especificación se encuentra vacío.', classes: 'rounded'});
     }else if(textoCostoTotal == "" || textoCostoTotal == 0){
       M.toast({html: 'El Costo Total se encuentra vacío o en 0.', classes: 'rounded'});
+    }else if(Entra =="No"){
+      M.toast({html: 'Seleccione un Tipo.', classes: 'rounded'});
     }else{
       $.post("../php/insert_cliente.php", {
           valorNombres: textoNombres+' '+textoAP+' '+textoAM,
@@ -63,7 +88,9 @@ function insert_cliente() {
           valorPaquete: textoPaquete,
           valorAnticipo: textoAnticipo,
           valorCostoTotal: textoCostoTotal,
-          valorTipo: textoTipo
+          valorTipo: textoTipo,
+          valorTipoInst: textoTipoInst,
+          valorServicio: textoServicio
         }, function(mensaje) {
             $("#resultado_insert_cliente").html(mensaje);
         }); 
@@ -140,7 +167,25 @@ function insert_cliente() {
             ?>
           </select>
         </div>
-        <div class="input-field">
+        
+        <div class="row">
+          <div class="col s1"><br></div>
+        <div class="col s12 m4 l4">
+          <p>
+            <br>
+            <input type="checkbox" id="Internet"  onchange="javascript:showContent()"/>
+            <label for="Internet">Internet</label>
+          </p>
+        </div>
+        <div class="col s12 m7 l7">
+          <p>
+            <br>
+            <input type="checkbox" id="IntyTel"  onchange="javascript:showContent()"/>
+            <label for="IntyTel">Internet y Telefonia</label>
+          </p>
+        </div>
+        </div><br>
+        <div class="input-field row">
           <i class="material-icons prefix">monetization_on</i>
           <input id="CostoTotal" type="number" class="validate" data-length="20" required value="0">
           <label for="CostoTotal">CostoTotal:</label>
@@ -160,6 +205,23 @@ function insert_cliente() {
         <div class="input-field">
           <textarea id="especificacion" class="materialize-textarea validate" data-length="150" required></textarea>
           <label for="especificacion">Especificación: ej. (Dos pisos, Porton blanco)</label>
+        </div>
+        <div class="row">
+          <div class="col s1"><br></div>
+        <div class="col s12 m4 l4">
+          <p>
+            <br>
+            <input type="checkbox" id="Telefonia"/>
+            <label for="Telefonia">Telefonia</label>
+          </p>
+        </div>
+        <div class="input-fiel col s12 m7 l7" id="content" style="display: none;"><br>
+              <select id="tipo" class="browser-default" required>
+                <option value="" selected>Tipo:</option>
+                <option value="0">Prepago</option>
+                <option value="1">Contrato</option>
+              </select>
+            </div>
         </div>
         <div class="row">
         <div class="input-field col s8 m9 l9">

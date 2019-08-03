@@ -36,7 +36,7 @@
 	      $fecha = $resultados['fecha'];
 	      $observacion = $resultados['observaciones'];
 	      $id_tecnico = $resultados['tecnico'];
-		  $total = $resultados['total'];
+		  $total = $resultados['precio'];
 
 	      if($id_tecnico==''){
 	          $tecnico[0] = 'Sin tecnico';

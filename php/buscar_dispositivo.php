@@ -37,7 +37,7 @@
 			$fecha = $resultados['fecha'];
 			$estatus =$resultados['estatus'];
 			$observacion = $resultados['observaciones'];
-			$total = $resultados['total'];
+			$total = $resultados['precio'];
 
 
 			//Output
