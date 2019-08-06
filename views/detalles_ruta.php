@@ -76,6 +76,7 @@ $ruta = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM rutas WHERE id_rut
 		      <tr>
 		        <th>No. Cliente</th>
 		        <th>Nombre</th>
+            <th>Servicio</th>
 		        <th>Telefono</th>
 		        <th>Lugar</th>
 		        <th>Registro</th>
@@ -100,7 +101,8 @@ $ruta = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM rutas WHERE id_rut
 				?>
   				<tr>
   				  <td><?php echo $id_cliente; ?></td>
-  				  <td><?php echo $pendientes['nombre'];?></td>
+            <td><?php echo $pendientes['nombre'];?></td>
+  				  <td><?php echo $pendientes['servicio'];?></td>
   				  <td><?php echo $pendientes['telefono'];?></td>
   				  <td><?php echo $sql_comunidad['nombre'];?></td>
   				 	<td><?php echo $pendientes['registro'];?></td>				          
@@ -233,6 +235,7 @@ $ruta = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM rutas WHERE id_rut
                     <tr>
                         <th>No. Cliente</th>
                         <th>Nombre</th>
+                        <th>Servicio</th>
                         <th>Telefono</th>
                         <th>Lugar</th>
                         <th>Dirección</th>
@@ -264,6 +267,7 @@ $ruta = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM rutas WHERE id_rut
                     <tr>
                       <td><?php echo $tmp['id_cliente']; ?></td>
                       <td><?php echo $tmp['nombre']; ?></td>
+                      <td><?php echo $cliente['servicio']; ?></td> 
                       <td><?php echo $tmp['telefono']; ?></td>
                       <td><?php echo $sql_comunidad1['nombre']; ?></td>
                       <td><?php echo $tmp['direccion']; ?></td> 

@@ -35,6 +35,7 @@ if (isset($consultaBusqueda)) {
 
 			$no_cliente = $resultados['id_cliente'];
 			$nombre = $resultados['nombre'];
+			$servicio = $resultados['servicio'];
 			$lugar = $sql_comunidad['nombre'];
 			$telefono = $resultados['telefono'];
 			$ip = $resultados['ip'];
@@ -44,6 +45,7 @@ if (isset($consultaBusqueda)) {
 		          <tr>
 		            <td>'.$no_cliente.'</td>
 		            <td>'.$nombre.'</td>
+		            <td>'.$servicio.'</td>
 		            <td>'.$lugar.'</td>
 		            <td>'.$telefono.'</td>
 		            <td>'.$ip.'</td>

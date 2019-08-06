@@ -56,6 +56,7 @@
 			$sql_comunidad = mysqli_fetch_array(mysqli_query($conn,"SELECT nombre FROM comunidades WHERE id_comunidad = $id_comunidad"));
 			$no_cliente = $resultados['id_cliente'];
 			$nombre = $resultados['nombre'];
+			$servicio = $resultados['servicio'];
 			$lugar = $sql_comunidad['nombre'];
 			$telefono = $resultados['telefono'];
 			$ip = $resultados['ip'];
@@ -65,6 +66,7 @@
 		          <tr>
 		            <td>'.$no_cliente.'</td>
 		            <td><b>'.$nombre.'</b></td>
+		            <td><b>'.$servicio.'</b></td>
 		            <td>'.$lugar.'</td>
 		            <td><form method="post" action="../views/crear_pago.php"><input id="no_cliente" name="no_cliente" type="hidden" value="'.$no_cliente.'"><button class="btn-floating btn-tiny waves-effect waves-light pink"><i class="material-icons">payment</i></button></form></td>
 		            <td><form method="post" action="../views/form_reportes.php"><input id="no_cliente" name="no_cliente" type="hidden" value="'.$no_cliente.'"><button class="btn-floating btn-tiny waves-effect waves-light pink"><i class="material-icons">report_problem</i></button></form></td>

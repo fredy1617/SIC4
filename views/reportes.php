@@ -109,6 +109,7 @@ include ('../php/cobrador.php');
                     <tr>
                         <th>No. Cliente</th>
                         <th>Nombre</th>
+                        <th>Servicio</th>
                         <th>Telefono</th>
                         <th>Lugar</th>
                         <th>Dirección</th>
@@ -127,10 +128,14 @@ include ('../php/cobrador.php');
                     while($tmp = mysqli_fetch_array($sql_tmp)){
                         $id_comunidad = $tmp['lugar'];
                         $sql_comunidad1 = mysqli_fetch_array(mysqli_query($conn,"SELECT nombre FROM comunidades WHERE id_comunidad=$id_comunidad"));
-                ?>
+                        $id_cliente = $tmp['id_cliente'];
+                        $serv = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM clientes WHERE id_cliente=$id_cliente"));
+
+                    ?>
                     <tr>
                       <td><?php echo $tmp['id_cliente']; ?></td>
                       <td><?php echo $tmp['nombre']; ?></td>
+                      <td><?php echo $serv['servicio']; ?></td>
                       <td><?php echo $tmp['telefono']; ?></td>
                       <td><?php echo $sql_comunidad1['nombre']; ?></td>
                       <td><?php echo $tmp['direccion']; ?></td>

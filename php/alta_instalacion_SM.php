@@ -9,7 +9,6 @@ $filtrarMaterial = $_POST['valorMaterial'];
 $filtrarObservacion = $_POST['valorObservacion'];
 $filtrarIdCliente = $_POST['valorIdCliente'];
 $filtrarTecnico = $_POST['valorTecnicos'];
-$filtrarTipo = $_POST['valorTipo'];
 
 //Filtro anti-XSS
 $caracteres_malos = array("<", ">", "\"", "'", "/", "<", ">", "'", "/");
@@ -19,7 +18,6 @@ $Material = str_replace($caracteres_malos, $caracteres_buenos, $filtrarMaterial)
 $Observacion = str_replace($caracteres_malos, $caracteres_buenos, $filtrarObservacion);
 $IdCliente = str_replace($caracteres_malos, $caracteres_buenos, $filtrarIdCliente);
 $Tecnico = str_replace($caracteres_malos, $caracteres_buenos, $filtrarTecnico);
-$Tipo = str_replace($caracteres_malos, $caracteres_buenos, $filtrarTipo);
 
 $Liquidar = $conn->real_escape_string($_POST['valorLiquidar']);
 $Tipo_Campio = $conn->real_escape_string($_POST['valorTipo_Cambio']);
@@ -30,12 +28,7 @@ $Coordenada = $conn->real_escape_string($_POST['valorCoordenada']);
 $FechaInstalacion = date('Y-m-d');
 $Hora = date('h:i:s');
 
-$Contrato = 0;
-$Prepago = 1;
-if ($Tipo == 1) {
-	$Contrato = 1;
-	$Prepago = 0;
-}
+
 if (filter_var($IP, FILTER_VALIDATE_IP)) {
 	$sql_ip = "SELECT * FROM clientes WHERE ip='$IP'";
 	if(mysqli_num_rows(mysqli_query($conn, $sql_ip))>0){
@@ -56,7 +49,7 @@ if (filter_var($IP, FILTER_VALIDATE_IP)) {
 
 		$nombre_completo = $id_paquete1['nombre'];
 		//////// configura tus datos		
-		            $sql="UPDATE clientes SET ip='$IP', material='$Material', tecnico='$Tecnico', instalacion=1, fecha_instalacion='$FechaInstalacion', fecha_corte='$FechaInstalacion', contrato = '$Contrato', Prepago = '$Prepago', hora_alta = '$Hora', coordenadas = '$Coordenada', referencia = '$Referencia', direccion = '$Direccion' WHERE id_cliente=$IdCliente";
+		            $sql="UPDATE clientes SET ip='$IP', material='$Material', tecnico='$Tecnico', instalacion=1, fecha_instalacion='$FechaInstalacion', fecha_corte='$FechaInstalacion', hora_alta = '$Hora', coordenadas = '$Coordenada', referencia = '$Referencia', direccion = '$Direccion' WHERE id_cliente=$IdCliente";
 		            
 		        	if(mysqli_query($conn,$sql)){
 		        		$Descripcion = "Liquidación de Instalación";

@@ -8,7 +8,7 @@ if ($tipo == "reporte") {
   $ruta = "../views/instalaciones.php";
 }
   if(mysqli_query($conn, "DELETE FROM `tmp_reportes` WHERE `tmp_reportes`.`id_reporte` = $IdReporte")){
-    echo '<script >M.toast({html:"Instalacion Borrada de la Ruta.", classes: "rounded"})</script>';
+    echo '<script >M.toast({html:"Reporte Borrado de la Ruta.", classes: "rounded"})</script>';
     ?>
   <script>    
       var a = document.createElement("a");

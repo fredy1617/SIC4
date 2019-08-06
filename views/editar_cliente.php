@@ -12,6 +12,7 @@ include('../php/cobrador.php');
 }
 </style>
 <script>
+ 
 function update_cliente() {
     var textoIdCliente = $("input#id_cliente").val();
     var textoNombres = $("input#nombres").val();
@@ -25,7 +26,17 @@ function update_cliente() {
     var textoTipo = $("select#tipo").val();
     var textoCoordenada = $("input#coordenada").val();
 
-  
+    Entra = "Si";
+    if (document.getElementById('IntyTel').checked==true) {
+      textoServicio = "Internet y Telefonia";
+      if (textoTipo == "") {Entra = "No";}
+    }else if(document.getElementById('Internet').checked==true){
+      textoServicio = "Internet";
+      if (textoTipo == "") {Entra = "No";}      
+    }else if(document.getElementById('Telefonia').checked==true){
+      textoServicio = "Telefonia";
+    }
+
     if (textoNombres == "") {
       M.toast({html: "El campo Nombre(s) se encuentra vacío.", classes: "rounded"});
     }else if(textoTelefono == ""){
@@ -36,10 +47,14 @@ function update_cliente() {
       M.toast({html: "El campo Dirección se encuentra vacío.", classes: "rounded"});
     }else if(textoReferencia == ""){
       M.toast({html: "El campo Referencia se encuentra vacío.", classes: "rounded"});
+    }else if (document.getElementById('IntyTel').checked==false && document.getElementById('Internet').checked==false && document.getElementById('Telefonia').checked==false ) {
+      M.toast({html: 'Elige una opcion de Internet o Telefonia.', classes: 'rounded'});
     }else if(textoPaquete == "0"){
       M.toast({html: "No se ha seleccionado un paquete de internet aún.", classes: "rounded"});
     }else if(textoIP == ""){
       M.toast({html: "El campo IP se encuentra vacío.", classes: "rounded"});
+    }else if(Entra =="No"){
+      M.toast({html: 'Seleccione un Tipo.', classes: 'rounded'});
     }else{
       $.post("../php/update_cliente.php", {
           valorIdCliente: textoIdCliente,
@@ -52,6 +67,7 @@ function update_cliente() {
           valorIP: textoIP,
           valorFechaCorte: textoFechaCorte,
           valorTipo: textoTipo,
+          valorServicio: textoServicio,
           valorCoordenada: textoCoordenada
         }, function(mensaje) {
             $("#resultado_update_cliente").html(mensaje);
@@ -61,17 +77,26 @@ function update_cliente() {
 </script>
 </head>
 <main>
-<body>
+<body onload="javascript:showContent()">
 <div class="container">
 <?php
 $id_cliente = $_POST['no_cliente'];
 $cliente = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM clientes WHERE id_cliente='$id_cliente'"));
 $valor = "";
+$id = 0;
 if ($cliente['contrato'] == 1) {
   $valor = "Contratro";
+  $id = 1;
 }
 if ($cliente['Prepago'] == 1) {
   $valor = "Prepago";
+}
+
+$ch = 'checked'; $ch2 = ''; $ch3 = ''; 
+if ($cliente['servicio'] == 'Telefonia') {
+  $ch = ''; $ch2 = ''; $ch3 = 'checked'; 
+}elseif ($cliente['servicio'] == 'Internet y Telefonia') {
+  $ch = ''; $ch2 = 'checked'; $ch3 = ''; 
 }
 
 $id_comunidad = $cliente['lugar'];
@@ -116,14 +141,41 @@ $paquete_cliente = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM paquete
           </select>
         </div>
       </div>
-      <div class="col s12 m6 l6"><br>
-        <div class="input-field">
-              <i class="material-icons prefix">add_location</i>
-              <input id="coordenada" type="text" class="validate" data-length="15" required>
-              <label for="coordenada">Coordenada:</label>
-            </div>
+      <div class="col s12 m6 l6">
+      <label><i class="material-icons">import_export</i>Paquete:</label>
+        <div class="input-field ">
+          <select id="paquete" class="browser-default" required>
+            <option value="<?php echo $paquete_cliente['id_paquete'];?>" selected>$<?php echo $paquete_cliente['mensualidad'];?> Velocidad: <?php echo $paquete_cliente['bajada'].'/'.$paquete_cliente['subida'];?></option>
+            <?php
+                $sql = mysqli_query($conn,"SELECT * FROM paquetes");
+                while($paquete = mysqli_fetch_array($sql)){
+                  ?>
+                    <option value="<?php echo $paquete['id_paquete'];?>">$<?php echo $paquete['mensualidad'];?> Velocidad: <?php echo $paquete['bajada'].'/'.$paquete['subida'];?></option>
+                  <?php
+                } 
+                mysqli_close($conn);
+            ?>
+          </select>
+        </div>
       </div>
       </div>
+       <div class="row">
+          <div class="col s1 m1 l1"><br></div>
+        <div class="col s12 m4 l4">
+          <p>
+            <br>
+            <input type="checkbox" id="Internet" <?php echo $ch;?> onchange="javascript:showContent()"/>
+            <label for="Internet">Internet</label>
+          </p>
+        </div>
+        <div class="col s12 m7 l7">
+          <p>
+            <br>
+            <input type="checkbox" id="IntyTel"  <?php echo $ch2;?>  onchange="javascript:showContent()"/>
+            <label for="IntyTel">Internet y Telefonia</label>
+          </p>
+        </div>
+        </div><br>
         <div class="input-field">
           <i class="material-icons prefix">location_on</i>
           <input id="direccion" type="text" class="validate" data-length="100" value="<?php echo $cliente['direccion'];?>" required>
@@ -143,35 +195,31 @@ $paquete_cliente = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM paquete
           <label for="ip">IP:</label>
         </div>
       <div class="row">
-        <div class="col s12 m6 l6">
-      <label><i class="material-icons">import_export</i>Paquete:</label>
-        <div class="input-field ">
-          <select id="paquete" class="browser-default" required>
-            <option value="<?php echo $paquete_cliente['id_paquete'];?>" selected>$<?php echo $paquete_cliente['mensualidad'];?> Velocidad: <?php echo $paquete_cliente['bajada'].'/'.$paquete_cliente['subida'];?></option>
-            <?php
-                $sql = mysqli_query($conn,"SELECT * FROM paquetes");
-                while($paquete = mysqli_fetch_array($sql)){
-                  ?>
-                    <option value="<?php echo $paquete['id_paquete'];?>">$<?php echo $paquete['mensualidad'];?> Velocidad: <?php echo $paquete['bajada'].'/'.$paquete['subida'];?></option>
-                  <?php
-                } 
-                mysqli_close($conn);
-            ?>
-          </select>
-        </div>
+        <div class="col s12"><br>
+        <div class="input-field">
+              <i class="material-icons prefix">add_location</i>
+              <input id="coordenada" type="text" class="validate" data-length="15" required>
+              <label for="coordenada">Coordenada:</label>
+            </div>
       </div>
-      <div class="col s12 m6 l6">
-      <label><i class="material-icons">assignment</i>Tipo:</label>
-        <div class="input-field ">
-          <select id="tipo" class="browser-default" required>
-            <option value="" selected><?php echo $valor; ?></option>
+      </div>
+      <div class="row">
+          <div class="col s1"><br></div>
+        <div class="col s12 m4 l4">
+          <p>
+            <br>
+            <input type="checkbox" <?php echo $ch3;?> id="Telefonia"/>
+            <label for="Telefonia">Telefonia</label>
+          </p>
+        </div>
+        <div class="input-fiel col s12 m7 l7" id="content" style="display: none;"><br>
+             <select id="tipo" class="browser-default" required>
+            <option value="<?php echo $id; ?>" selected><?php echo $valor; ?></option>
             <option value="0">Prepago</option> 
             <option value="1">Contrato</option>   
           </select>
-        </div>
-      </div>
-
-      </div>
+            </div>
+        </div><br>
         <div class="input-field">
           <i class="material-icons prefix">date_range</i>
           <input id="fecha_corte" type="date" class="validate" value="<?php echo $cliente['fecha_corte'];?>" required>
@@ -186,5 +234,17 @@ $paquete_cliente = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM paquete
 </div>
 <br>
 </body>
+<script>
+   function showContent() {
+        element = document.getElementById("content");
+        if (document.getElementById('IntyTel').checked==true || document.getElementById('Internet').checked==true) {
+            element.style.display='block';
+        }
+        else {
+            element.style.display='none';
+        }
+        
+    };
+</script>
 </main>
 </html>

@@ -35,10 +35,14 @@ $sql_instalacion = mysqli_query($conn,"SELECT * FROM tmp_pendientes WHERE ruta_i
 		while($instalacion = mysqli_fetch_array($sql_instalacion)){
 			$id_comunidad = $instalacion['lugar'];
             $sql_comunidad = mysqli_fetch_array(mysqli_query($conn,"SELECT nombre FROM comunidades WHERE id_comunidad=$id_comunidad"));
+            $id_cliente = $instalacion['id_cliente'];
+            $serv = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM clientes WHERE id_cliente=$id_cliente"));
+
 			$mensaje .= '
 	        <tr>
 	          <td>'.$instalacion['id_cliente'].'</td>
 	          <td>'.$instalacion['nombre'].'</td>
+	          <td>'.$serv['servicio'].'</td>
 	          <td>'.$instalacion['telefono'].'</td>
 	          <td>'.$sql_comunidad['nombre'].'</td>
 	          <td>'.$instalacion['direccion'].'</td>

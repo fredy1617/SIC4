@@ -76,6 +76,7 @@ if (mysqli_num_rows($sql)>0) {
 			      <tr>
 			      	<th># Cliente</th>
 			        <th>Nombre</th>
+			        <th>Servicio</th>
 			        <th>Comunidad</th>
 			        <th>Pago</th>
 			        <th>Reporte</th>

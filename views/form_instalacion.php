@@ -20,7 +20,7 @@ include('../php/cobrador.php');
             element.style.display='none';
         }
         
-    }
+    };
 function insert_cliente() {
     var textoNombres = $("input#nombres").val();
     var textoAM = $("input#apellido-M").val();

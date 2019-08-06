@@ -28,9 +28,12 @@ class PDF extends FPDF{
             
             $id_paquete = $listado['paquete'];
             $paquete = mysqli_fetch_array(mysqli_query($conn, "SELECT subida, bajada, mensualidad FROM paquetes WHERE id_paquete=$id_paquete"));
+            $id_cliente = $listado['id_cliente'];
+            $cliente = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM clientes WHERE id_cliente = $id_cliente"));
 
             $this->MultiCell(194,4, utf8_decode('NO. CLIENTE: '.$listado['id_cliente']),0,'L',false);
             $this->MultiCell(194,4, utf8_decode('NOMBRE: '.$listado['nombre']),0,'L',false);
+            $this->MultiCell(194,4, utf8_decode('SERVICIO: '.$cliente['servicio']),0,'L',false);
             $this->MultiCell(194,4, utf8_decode('TELÉFONO: '.$listado['telefono']),0,'L',false);
             $this->MultiCell(194,4, utf8_decode('DIRECCIÓN: '.$listado['direccion']),0,'L',false);
             $this->MultiCell(194,4, utf8_decode('LUGAR: '.$sql_comunidad['nombre']),0,'L',false);

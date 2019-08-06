@@ -38,6 +38,7 @@ include('fredyNav.php');
 			      <tr>
 			      	<th># Cliente</th>
 			        <th>Nombre</th>
+			        <th>Servicio</th>
 			        <th>Comunidad</th>
 			        <th>Telefono</th>
 			        <th>Ip</th>

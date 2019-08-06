@@ -21,8 +21,7 @@ function alta_instalacion_SM(bandera) {
     var textoIP = $("input#ip").val();
     var textoMaterial = $("textarea#material").val();    
     var textoObservacion = $("textarea#observacion").val();
-    var textoIdCliente = $("input#id_cliente").val();  
-    var textoTipo = $("select#tipo").val();
+    var textoIdCliente = $("input#id_cliente").val();
     var textoLiquidar = $("input#liquidar").val();
     var textoDireccion = $("input#direccion").val();
     var textoReferencia = $("input#referencia").val();
@@ -34,9 +33,7 @@ function alta_instalacion_SM(bandera) {
       textoTipo_cambio = "Efectivo";
     }
 
-    if (textoTipo == "") {
-      M.toast({html:"Seleccione algun tipo.", classes: "rounded"});
-    }else if (textoIP == "") {
+    if (textoIP == "") {
       M.toast({html:"El campo IP se encuentra vacío.", classes: "rounded"});
     }else if(textoMaterial == ""){
       M.toast({html:"El campo Material se encuentra vacío.", classes: "rounded"});
@@ -49,7 +46,6 @@ function alta_instalacion_SM(bandera) {
           valorObservacion: textoObservacion,
           valorIdCliente: textoIdCliente,
           valorTecnicos: textoTecnicos,
-          valorTipo: textoTipo,
           valorLiquidar : textoLiquidar,
           valorTipo_Cambio: textoTipo_cambio,
           valorDireccion: textoDireccion,
@@ -73,7 +69,6 @@ function alta_instalacion(bandera) {
     var textoIP = $("input#ip").val();
     var textoMaterial = $("textarea#material").val();
     var textoIdCliente = $("input#id_cliente").val();
-    var textoTipo = $("select#tipo").val();
     var textoLiquidar = $("input#liquidar").val();
     var textoDireccion = $("input#direccion").val();
     var textoReferencia = $("input#referencia").val();
@@ -85,9 +80,7 @@ function alta_instalacion(bandera) {
       textoTipo_cambio = "Efectivo";
     }
 
-    if (textoTipo == "") {
-      M.toast({html:"Seleccione algun tipo.", classes: "rounded"});
-    }else if (textoIP == "") {
+    if (textoIP == "") {
       M.toast({html:"El campo IP se encuentra vacío.", classes: "rounded"});
     }else if(textoMaterial == ""){
       M.toast({html:"El campo Material se encuentra vacío.", classes: "rounded"});
@@ -99,7 +92,6 @@ function alta_instalacion(bandera) {
           valorMaterial: textoMaterial,
           valorIdCliente: textoIdCliente,
           valorTecnicos: textoTecnicos,
-          valorTipo: textoTipo,
           valorLiquidar : textoLiquidar,
           valorTipo_Cambio: textoTipo_cambio,
           valorDireccion: textoDireccion,
@@ -178,11 +170,7 @@ function alta_instalacion(bandera) {
               <textarea id="observacion" class="materialize-textarea validate" data-length="150" required></textarea>
               <label for="observacion">Observacion Tecnica:</label>
             </div>
-            <div class="input-field">
-              <i class="material-icons prefix">add_location</i>
-              <input id="coordenada" type="text" class="validate" data-length="15" required>
-              <label for="coordenada">Coordenada:</label>
-            </div>
+            
             </div>
             <!-- AQUI SE ENCUENTRA LA DOBLE COLUMNA EN ESCRITORIO.-->
             <div class="col s12 m6 l6"><br>
@@ -201,12 +189,10 @@ function alta_instalacion(bandera) {
             </div>
             </div>
             <input id="id_cliente" type="hidden" class="validate" data-length="200" value="<?php echo $datos['id_cliente'];?>" required>
-            <div class="input-fiel row">
-              <select id="tipo" class="browser-default" required>
-                <option value="" selected>Tipo:</option>
-                <option value="0">Prepago</option>
-                <option value="1">Contrato</option>
-              </select>
+            <div class="input-field">
+              <i class="material-icons prefix">add_location</i>
+              <input id="coordenada" type="text" class="validate" data-length="15" required>
+              <label for="coordenada">Coordenada:</label>
             </div><br>
             <label>Técnicos:</label>
                 <p>

@@ -6,7 +6,6 @@ $IP = $_POST['valorIP'];
 $filtrarMaterial = $_POST['valorMaterial'];
 $filtrarIdCliente = $_POST['valorIdCliente'];
 $filtrarTecnico = $_POST['valorTecnicos'];
-$filtrarTipo = $_POST['valorTipo'];
 
 //Filtro anti-XSS
 $caracteres_malos = array("<", ">", "\"", "'", "/", "<", ">", "'", "/");
@@ -17,7 +16,6 @@ $id_user = $_SESSION['user_id'];
 $Material = str_replace($caracteres_malos, $caracteres_buenos, $filtrarMaterial);
 $IdCliente = str_replace($caracteres_malos, $caracteres_buenos, $filtrarIdCliente);
 $Tecnico = str_replace($caracteres_malos, $caracteres_buenos, $filtrarTecnico);
-$Tipo = str_replace($caracteres_malos, $caracteres_buenos, $filtrarTipo);
 $Liquidar = $conn->real_escape_string($_POST['valorLiquidar']);
 $Tipo_Campio = $conn->real_escape_string($_POST['valorTipo_Cambio']);
 $Direccion = $conn->real_escape_string($_POST['valorDireccion']);
@@ -27,12 +25,6 @@ $Coordenada = $conn->real_escape_string($_POST['valorCoordenada']);
 $FechaInstalacion = date('Y-m-d');
 $Hora = date('h:i:s');
 
-$Contratro = 0;
-$Prepago = 1;
-if ($Tipo == 1) {
-	$Contratro = 1;
-	$Prepago = 0;
-}
 
 if (filter_var($IP, FILTER_VALIDATE_IP)) {
 	$sql_ip = "SELECT * FROM clientes WHERE ip='$IP'";
@@ -86,7 +78,7 @@ if (filter_var($IP, FILTER_VALIDATE_IP)) {
 		            $API->write('=comment='.$comment,true);         // comentario
 		            $READ = $API->read(false);
 		            $ARRAY = $API->parse_response($READ);  
-		            $sql="UPDATE clientes SET ip='$IP', material='$Material', tecnico='$Tecnico', instalacion=1, fecha_instalacion='$FechaInstalacion', fecha_corte='$FechaInstalacion', contrato = '$Contrato', Prepago = '$Prepago', hora_alta = '$Hora', coordenadas = '$Coordenada', referencia = '$Referencia', direccion = '$Direccion' WHERE id_cliente=$IdCliente";
+		            $sql="UPDATE clientes SET ip='$IP', material='$Material', tecnico='$Tecnico', instalacion=1, fecha_instalacion='$FechaInstalacion', fecha_corte='$FechaInstalacion', hora_alta = '$Hora', coordenadas = '$Coordenada', referencia = '$Referencia', direccion = '$Direccion' WHERE id_cliente=$IdCliente";
 
 		        	if(mysqli_query($conn, $sql)){    
 
