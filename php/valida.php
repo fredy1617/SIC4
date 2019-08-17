@@ -1,39 +1,35 @@
 <?php 
 	include ('conexion.php');
 	$Texto = $conn->real_escape_string($_POST['texto']);
-	//Filtro anti-XSS
-	$caracteres_malos = array("<", ">", "\"", "'", "/", "<", ">", "'", "/");
-	$caracteres_buenos = array("& lt;", "& gt;", "& quot;", "& #x27;", "& #x2F;", "& #060;", "& #062;", "& #039;", "& #047;");
-
-	$Texto = str_replace($caracteres_malos, $caracteres_buenos, $Texto);
-	$id_comunidad = $Texto;
-	$ver = explode("-", $Texto);
-	$SiIp = explode("*", $Texto);
-	$ip = "";
-	$limite = 'Limit 20';
-	if (count($ver) > 1) {
-		$nombre= $ver[1];
-
-		$consulta = mysqli_query($conn, "SELECT * FROM comunidades WHERE nombre LIKE '%$nombre%'Limit 1");
-		$filas = mysqli_num_rows($consulta);
-		if ($filas == 0) {
-		$mensaje = '<script>M.toast({html:"No se encontraron comunidades.", classes: "rounded"})</script>';
-		} else {
-		  	$comunidad = mysqli_fetch_array($consulta);
-		  	$id_comunidad = $comunidad['id_comunidad'];
-		  	$limite ='';
-		}
-	}elseif (count($SiIp)>1) {
-		$ip = trim($SiIp[1]);
-	}
-
 	$mensaje = '';
-
-	$sql = "SELECT * FROM clientes WHERE instalacion IS NOT NULL $limite";
-
-	if ($Texto != ""){
-		$sql = "SELECT * FROM clientes WHERE ip = '$ip' OR lugar LIKE '$id_comunidad' OR nombre LIKE '%$Texto%'  OR   id_cliente LIKE '$Texto'   AND instalacion IS NOT NULL $limite";
+	if ($Texto != "") {
+		$Com = explode("-", $Texto);
+		$SiIp = explode("*", $Texto);
+		if (count($Com)>1) {
+			//PRIMERO VERA SI ESTAMOS BUSCANDO UNA COMUNIDAD EN ESTE IF Y MOSTRARA TODOS LOS CLIENTES DE ESA COMUNIDAD
+			$nombre = $Com[1];
+			$consulta = mysqli_query($conn, "SELECT * FROM comunidades WHERE nombre LIKE '%$nombre%' LIMIT 1");
+			$filas = mysqli_num_rows($consulta);
+			if ($filas == 0) {
+				echo '<script>M.toast({html: "No se encontraron comunidades.", classes: "rounded"})</script>';
+			}else{
+				$comunidad = mysqli_fetch_array($consulta);
+				$id_comunidad = $comunidad['id_comunidad'];
+				$sql = "SELECT * FROM clientes WHERE lugar = '$id_comunidad' AND instalacion IS NOT NULL";
+			}
+		}else if (count($SiIp)>1) {
+			//DESPUES VERA SI ESTAMOS BUSACANDO UN CLIENTE POR IP
+			$ip = trim($SiIp[1]);
+			$sql = "SELECT * FROM clientes WHERE ip LIKE '$ip%' AND instalacion IS NOT NULL LIMIT 20";
+		}else{
+			//AQUI BUSCARA SI ES POR NOMBRE O POR ID DE CLIENTE
+			$sql = "SELECT * FROM clientes WHERE ( nombre LIKE '%$Texto%' OR id_cliente = '$Texto') AND instalacion IS NOT NULL LIMIT 20";
+		}
+	}else{
+		//ESTA CONSULTA SE HARA SIEMPRE QUE NO ALLA NADA EN EL BUSCADOR...
+		$sql = "SELECT * FROM clientes WHERE instalacion IS NOT NULL LIMIT 30";
 	}
+
 	$consulta = mysqli_query($conn, $sql);
 	//Obtiene la cantidad de filas que hay en la consulta
 	$filas = mysqli_num_rows($consulta);

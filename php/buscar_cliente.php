@@ -3,10 +3,6 @@ include 'conexion.php';
 
 $consultaBusqueda = $conn->real_escape_string($_POST['texto']);
 error_reporting(0);
-//Filtro anti-XSS
-$caracteres_malos = array("<", ">", "\"", "'", "/", "<", ">", "'", "/");
-$caracteres_buenos = array("& lt;", "& gt;", "& quot;", "& #x27;", "& #x2F;", "& #060;", "& #062;", "& #039;", "& #047;");
-$consultaBusqueda = str_replace($caracteres_malos, $caracteres_buenos, $consultaBusqueda);
 
 //Variable vacía (para evitar los E_NOTICE)
 $mensaje = "";
