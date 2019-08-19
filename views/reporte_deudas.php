@@ -39,6 +39,7 @@ include('../php/superAdmin.php');
 				date_default_timezone_set('America/Mexico_City');
 				$Fecha_Hoy = date('Y-m-d');
 				$cont=0;
+				$total = 0;
 				while ( $resultados = mysqli_fetch_array($sql)) {
 					$id_cliente = $resultados['id_cliente'];
 					$cliente = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM clientes WHERE id_cliente = $id_cliente"));
@@ -55,6 +56,11 @@ include('../php/superAdmin.php');
 						$estatus = "Cobrar";
 					}
 					$cont++;
+					$cantidad = $resultados['cantidad'];
+					if ($cantidad =='') {
+						$cantidad= 0;
+					}
+
 				?>
 					<tr>
 						<td><?php echo $cont; ?></td>
@@ -63,14 +69,22 @@ include('../php/superAdmin.php');
 						<td><?php echo $cliente['nombre']; ?></td>
 						<td><?php echo $cliente['telefono'] ?></td>
 						<td><?php echo $Comunidad['nombre']; ?></td>						
-						<td><?php echo $resultados['cantidad']; ?></td>
+						<td>$<?php echo $cantidad; ?></td>
 						<td><?php echo $resultados['fecha_deuda']; ?></td>
 						<td><?php echo $resultados['descripcion']; ?></td>
 						<td><?php echo $usuario['firstname']; ?></td>
 					<td><form method="post" action="../views/credito.php"><input id="no_cliente" name="no_cliente" type="hidden" value="<?php echo $id_cliente; ?>"><button class="btn-floating btn-tiny waves-effect waves-light pink"><i class="material-icons">send</i></button></form></td>
 					</tr>
 				<?php
+					$total += $cantidad;
 				}
+					?>
+					<tr>
+						<td></td><td></td><td></td><td></td><td></td>
+						<td><b>TOTAL:</b></td><td><b> $<?php echo $total; ?></b></td>
+						<td></td><td></td><td></td><td></td>
+					</tr>
+					<?php
 				}
 				?>
 				</tbody>				

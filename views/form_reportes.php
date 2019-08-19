@@ -99,7 +99,6 @@ $comunidad = mysqli_fetch_array(mysqli_query($conn, "SELECT nombre FROM comunida
          <span class="new badge pink hide-on-med-and-up" data-badge-caption="ACTIVO"></span><br>
 
       </p>
-      <a class="secondary-content"><span class="new badge pink hide-on-small-only" data-badge-caption="ACTIVO"></span></a>
     </li>
   </ul>
 

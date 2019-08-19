@@ -58,8 +58,8 @@ function insert_cliente() {
       M.toast({html: 'El campo Apellido Materno se encuentra vacío.', classes: 'rounded'});
     }else if(textoAP == ""){
       M.toast({html: 'El campo Apellido Paterno se encuentra vacío.', classes: 'rounded'});
-    }else if(textoTelefono == ""){
-      M.toast({html: 'El campo Telefono se encuentra vacío.', classes: 'rounded'});
+    }else if(textoTelefono.length < 10){
+      M.toast({html: 'El telefono tiene que tener al menos 10 dijitos.', classes: 'rounded'});
     }else if(textoComunidad == "0"){
       M.toast({html: 'No se ha seleccionado una comunidad aún.', classes: 'rounded'});
     }else if(textoPaquete == "0"){
@@ -68,12 +68,12 @@ function insert_cliente() {
       M.toast({html: 'El campo Dirección se encuentra vacío.', classes: 'rounded'});
     }else if (document.getElementById('IntyTel').checked==false && document.getElementById('Internet').checked==false && document.getElementById('Telefonia').checked==false ) {
       M.toast({html: 'Elige una opcion de Internet o Telefonia.', classes: 'rounded'});
-    }else if(textoColor == ""){
-      M.toast({html: 'El campo Color se encuentra vacío.', classes: 'rounded'});
-    }else if(textoCerca == ""){
-      M.toast({html: 'El campo Cerca De se encuentra vacío.', classes: 'rounded'});
-    }else if(textoEsp == ""){
-      M.toast({html: 'El campo Especificación se encuentra vacío.', classes: 'rounded'});
+    }else if(textoColor.length < 4){
+      M.toast({html: 'El campo Color tiene que contener al menos 4 caracteres.', classes: 'rounded'});
+    }else if(textoCerca.length < 4){
+      M.toast({html: 'El campo Cerca De tiene que contener al menos 4 caracteres.', classes: 'rounded'});
+    }else if(textoEsp.length < 4){
+      M.toast({html: 'El campo Especificación tiene que contener al menos 4 caracteres.', classes: 'rounded'});
     }else if(textoCostoTotal == "" || textoCostoTotal == 0){
       M.toast({html: 'El Costo Total se encuentra vacío o en 0.', classes: 'rounded'});
     }else if(Entra =="No"){
