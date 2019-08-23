@@ -10,10 +10,10 @@ $filtrarNombres = $_POST['valorNombres'];
 $filtrarTelefono = $_POST['valorTelefono'];
 $filtrarMarca = $_POST['valorMarca'];
 $filtrarModelo = $_POST['valorModelo'];
-$filtrarColor = $_POST['valorColor'];
+$filtrarColor = $_POST['valorTipo'];
 $filtrarContra = $_POST['valorContra'];
 $filtrarFalla = $_POST['valorFalla'];
-$filtrarCables = $_POST['valorCables'];
+$filtrarExtra = $_POST['valorExtras'];
 
 
 //Filtro anti-XSS
@@ -24,18 +24,19 @@ $Nombres = str_replace($caracteres_malos, $caracteres_buenos, $filtrarNombres);
 $Telefono = str_replace($caracteres_malos, $caracteres_buenos, $filtrarTelefono);
 $Marca = str_replace($caracteres_malos, $caracteres_buenos, $filtrarMarca);
 $Modelo = str_replace($caracteres_malos, $caracteres_buenos, $filtrarModelo);
-$Color = str_replace($caracteres_malos, $caracteres_buenos, $filtrarColor);
+$Tipo = str_replace($caracteres_malos, $caracteres_buenos, $filtrarColor);
 $Contra = str_replace($caracteres_malos, $caracteres_buenos, $filtrarContra);
 $Falla = str_replace($caracteres_malos, $caracteres_buenos, $filtrarFalla);
-$Cables = str_replace($caracteres_malos, $caracteres_buenos, $filtrarCables);
+$Extra = str_replace($caracteres_malos, $caracteres_buenos, $filtrarExtra);
+$id_user = $_SESSION['user_id'];
 $Fecha = date('Y-m-d');
 
 $mensaje = '';
 
-if(mysqli_num_rows(mysqli_query($conn, "SELECT * FROM dispositivos WHERE nombre='$Nombres' AND telefono='$Telefono' AND marca='$Marca' AND modelo='$Modelo' AND color='$Color' AND contra='$Contra' AND falla='$Falla' AND cables='$Cables' AND fecha='$Fecha'"))>0){
+if(mysqli_num_rows(mysqli_query($conn, "SELECT * FROM dispositivos WHERE nombre='$Nombres' AND telefono='$Telefono' AND marca='$Marca' AND modelo='$Modelo' AND contra='$Contra' AND falla='$Falla'  AND fecha='$Fecha'"))>0){
 	$mensaje = "<script>M.toast({html: 'No puedes registrar los mismos datos 2 veces hoy.', classes: 'rounded'})</script>";
 }else{
-	if(mysqli_query($conn, "INSERT INTO dispositivos (tecnico, nombre, telefono, marca, modelo, color, contra, falla, cables, fecha, estatus) VALUES (0, '$Nombres', '$Telefono', '$Marca', '$Modelo', '$Color', '$Contra', '$Falla', '$Cables', '$Fecha', 'Pendiente')")){
+	if(mysqli_query($conn, "INSERT INTO dispositivos (tecnico, nombre, telefono, marca, modelo, contra, falla, fecha, estatus, recibe, tipo, extras) VALUES (0, '$Nombres', '$Telefono', '$Marca', '$Modelo', '$Contra', '$Falla', '$Fecha', 'Pendiente', '$id_user', '$Tipo', '$Extra')")){
 		$mensaje = "<script>M.toast({html: 'Registro exitoso.', classes: 'rounded'})</script>";
 		echo "<script>window.open('../php/folioEntrada.php', '_blank')</script>";
 	}else{

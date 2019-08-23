@@ -15,7 +15,8 @@ class PDF extends FPDF{
         $listado = mysqli_query($enlace, "SELECT * FROM dispositivos WHERE id_dispositivo='$id'");
         $num_filas = mysqli_num_rows($listado);
         $fila = mysqli_fetch_array($listado);
-
+        $id_User = $fila['recibe'];
+        $User = mysqli_fetch_array(mysqli_query($enlace, "SELECT * FROM users WHERE user_id = '$id_User'"));
             
         
         // Colores de los bordes, fondo y texto
@@ -55,6 +56,9 @@ class PDF extends FPDF{
         $this->MultiCell(70,4,utf8_decode('TEL. CLIENTE: '.$fila['telefono']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
+        $this->MultiCell(70,4,utf8_decode('DISPOSITIVO: '.$fila['tipo']),0,'L',true); 
+        $this->Ln($salto);
+        $this->SetX(6);
         $this->MultiCell(70,4,utf8_decode('MARCA: '.$fila['marca']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
@@ -64,18 +68,15 @@ class PDF extends FPDF{
         $this->MultiCell(70,4,utf8_decode('CONTRASEÑA: '.$fila['contra']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
-        $this->MultiCell(70,4,utf8_decode('COLOR: '.$fila['color']),0,'L',true);
+        $this->MultiCell(70,4,utf8_decode('MAS: '.$fila['extras']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
         $this->MultiCell(70,4,utf8_decode('FALLA: '.$fila['falla']),0,'L',true);
-        $this->Ln($salto);
-        $this->SetX(6);
-        $this->MultiCell(70,4,utf8_decode('NOTA AL RECIBIR: '.$fila['cables']),0,'L',true);
-        $this->Ln(10);
+        $this->Ln(8);
         $this->SetX(6);
         $this->MultiCell(70,4,utf8_decode('_________________________________'),0,'L',false);
         $this->SetX(6);
-        $this->MultiCell(70,7,utf8_decode('Firma Recibido ('.$_SESSION['user_name'].')'),0,'C',false);
+        $this->MultiCell(70,7,utf8_decode('Firma Recibido ('.$User['firstname'].' '.$User['lastname'].')'),0,'C',false);
 
         $this->SetFont('Arial','B',7); 
         $this->SetX(5);
@@ -97,6 +98,8 @@ class PDF extends FPDF{
         $listado = mysqli_query($enlace, "SELECT * FROM dispositivos WHERE id_dispositivo='$id'");
         $num_filas = mysqli_num_rows($listado);
         $fila = mysqli_fetch_array($listado);
+        $id_User = $fila['recibe'];
+        $User = mysqli_fetch_array(mysqli_query($enlace, "SELECT * FROM users WHERE user_id = '$id_User'"));
 
             
         
@@ -129,7 +132,10 @@ class PDF extends FPDF{
         $this->MultiCell(70,4,utf8_decode('CLIENTE: '.$fila['nombre']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
-        $this->MultiCell(70,4,utf8_decode('REGISTRÓ: '.$_SESSION['user_name']),0,'L',true);
+        $this->MultiCell(70,4,utf8_decode('DISPOSITIVO: '.$fila['tipo']),0,'L',true);
+        $this->Ln($salto);
+        $this->SetX(6);
+        $this->MultiCell(70,4,utf8_decode('REGISTRÓ: '.$User['firstname'].' '.$User['lastname']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
         $this->MultiCell(70,4,utf8_decode('TEL. SIC: 9356286'),0,'L',true);
@@ -147,14 +153,11 @@ class PDF extends FPDF{
         $this->MultiCell(70,4,utf8_decode('CONTRASEÑA: '.$fila['contra']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
-        $this->MultiCell(70,4,utf8_decode('COLOR: '.$fila['color']),0,'L',true);
+        $this->MultiCell(70,4,utf8_decode('MAS: '.$fila['extras']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
         $this->MultiCell(70,4,utf8_decode('FALLA: '.$fila['falla']),0,'L',true);
-        $this->Ln($salto);
-        $this->SetX(6);
-        $this->MultiCell(70,4,utf8_decode('NOTA AL RECIBIR: '.$fila['cables']),0,'L',true);
-        $this->Ln(10);
+        $this->Ln(8);
         $this->SetX(6);
         $this->MultiCell(70,4,utf8_decode('_________________________________'),0,'L',false);
         $this->SetX(6);
@@ -181,10 +184,10 @@ $num_filas = mysqli_num_rows($listado);
 $fila = mysqli_fetch_array($listado);
 
 $pdf = new PDF('P', 'mm', array(80,297));
-$pdf->SetTitle('Folio_'.$fila['id_dispositivo'].'_'.$fila['nombre'].'_'.'_'.$fila['marca'].'_'.$fila['modelo'].'_color_'.$fila['color']);
+$pdf->SetTitle('Folio_'.$fila['id_dispositivo'].'_'.$fila['nombre'].'_'.$fila['tipo'].'_'.$fila['marca'].'_'.$fila['modelo']);
 
 $pdf->folioCliente();
 $pdf->folioCliente2();
-$pdf->Output('Folio_'.$fila['id_dispositivo'].'_'.$fila['nombre'].'_'.'_'.$fila['marca'].'_'.$fila['modelo'].'_color_'.$fila['color'],'I');
+$pdf->Output('Folio_'.$fila['id_dispositivo'].'_'.$fila['nombre'].'_'.$fila['tipo'].'_'.$fila['marca'].'_'.$fila['modelo'],'I');
 
 ?>

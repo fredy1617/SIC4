@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>SIC | Formulario Dispositivo</title>
+  <title>SIC | Formulario Dispositivo</title>
 <?php 
 include('fredyNav.php');
 include ('../php/cobrador.php');
@@ -11,10 +11,10 @@ function insert_dis() {
     var textoTelefono = $("input#telefono").val();
     var textoMarca = $("input#marca").val();
     var textoModelo = $("input#modelo").val();
-    var textoColor = $("input#color").val();
+    var textoTipo = $("input#tipo").val();
     var textoContra = $("input#contra").val();
     var textoFalla = $("input#falla").val();
-    var textoCables = $("input#cables").val();
+    var textoExtras = $("input#extras").val();
   
     if (textoNombres == "") {
       M.toast({html: 'El campo Nombre se encuentra vacío.', classes: 'rounded'});
@@ -24,13 +24,13 @@ function insert_dis() {
       M.toast({html: 'El campo Marca se encuentra vacío.', classes: 'rounded'});
     }else if(textoModelo == ""){      
       M.toast({html: 'El campo Modelo se encuentra vacío.', classes: 'rounded'});
-    }else if(textoColor == ""){      
+    }else if(textoTipo == ""){      
       M.toast({html: 'El campo Color se encuentra vacío.', classes: 'rounded'});
     }else if(textoContra == ""){      
       M.toast({html: 'El campo Contraseña se encuentra vacío.', classes: 'rounded'});
     }else if(textoFalla == ""){      
       M.toast({html: 'El campo Falla se encuentra vacío.', classes: 'rounded'});
-    }else if(textoCables == ""){
+    }else if(textoExtras == ""){
       M.toast({html: 'El campo Cables se encuentra vacío.', classes: 'rounded'});
     }else{
       $.post("../php/insert_dispositivo.php", {
@@ -38,10 +38,10 @@ function insert_dis() {
           valorTelefono: textoTelefono,
           valorMarca: textoMarca,
           valorModelo: textoModelo,
-          valorColor: textoColor,
+          valorTipo: textoTipo,
           valorContra: textoContra,
           valorFalla: textoFalla,
-          valorCables: textoCables
+          valorExtras: textoExtras
         }, function(mensaje) {
             $("#resultado_insert_dispositivo").html(mensaje);
         }); 
@@ -79,7 +79,7 @@ function insert_dis() {
           <label for="marca">Marca:</label>
         </div>
         <div class="input-field">
-          <i class="material-icons prefix">phonelink</i>
+          <i class="material-icons prefix">confirmation_number</i>
           <input id="modelo" type="text" class="validate" data-length="20" required>
           <label for="modelo">Modelo:</label>
         </div>
@@ -87,9 +87,9 @@ function insert_dis() {
           <!-- AQUI SE ENCUENTRA LA DOBLE COLUMNA EN ESCRITORIO.-->
         <div class="col s12 m6 l6">
         <div class="input-field">
-          <i class="material-icons prefix">color_lens</i>
-          <input id="color" type="text" class="validate" data-length="30" required>
-          <label for="color">Color:</label>
+          <i class="material-icons prefix">phonelink</i>
+          <input id="tipo" type="text" class="validate" data-length="30" required>
+          <label for="tipo">Tipo de Dispositivo (ej: PC, Movil):</label>
         </div>
         <div class="input-field">
           <i class="material-icons prefix">lock</i>
@@ -103,12 +103,12 @@ function insert_dis() {
         </div>
         <div class="input-field">
           <i class="material-icons prefix">power</i>
-          <input id="cables" type="text" class="validate" data-length="50" required>
-          <label for="cables">Cables:</label>
+          <input id="extras" type="text" class="validate" data-length="50" required>
+          <label for="extras">Extras (ej: Color, Cables):</label>
         </div>
       </div>
     </form>
-      <a onclick="insert_dis();" class="waves-effect waves-light btn pink right"><i class="material-icons right">send</i>ENVIAR</a>
+      <a onclick="insert_dis();" class="waves-effect waves-light btn pink right"><i class="material-icons right">send</i>REGISTRAR</a>
     
   </div> 
 </div><br>

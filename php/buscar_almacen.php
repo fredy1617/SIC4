@@ -26,7 +26,13 @@ if ($filas == 0) {
 		$fecha = $resultados['fecha'];
 		$observacion = $resultados['observaciones'];
 		$id_tecnico = $resultados['tecnico'];
-		$total = $resultados['total'];
+		$total = $resultados['precio'];
+
+		if ($resultados['extras'] == NULL) {
+			$extra = 'color '.$color.', con cable(s) de '.$cables;
+		}else{
+			$extra = $resultados['extras'];
+		}
 
 		if ($id_tecnico == '') {
 			$tecnico[0] = 'Sin tecnico';
@@ -39,11 +45,11 @@ if ($filas == 0) {
 		            <td>'.$id_dispositivo.'</td>
 		            <td>'.$nombre.'</td>
 		            <td>'.$telefono.'</td>
-		            <td>'.$marca.' '.$color.'</td>
+		            <td>'.$resultados['tipo'].' '.$marca.'</td>
+		            <td>'.$extra.'</td>
 		            <td>'.$falla.'</td>
 		            <td>'.$observacion.'</td>
 		            <td>'.$total.'</td>
-		            <td>'.$cables.'</td>
 		            <td>'.$fecha.'</td>
 		            <td>'.$tecnico[0].'</td>
 		            <td><form method="post" action="../php/Salida_SerTec.php" target="blank"><input id="id_dispositivo" name="id_dispositivo" type="hidden" value="'. $id_dispositivo.'"><button class="btn-floating btn-tiny waves-effect waves-light pink"><i class="material-icons">exit_to_app</i></button></form></td>

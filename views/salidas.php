@@ -91,12 +91,20 @@ function salida(imprimir) {
               <span class="title"><b>Folio: </b><?php echo $datos['id_dispositivo'];?></span>
               <p><b>Nombre: </b><?php echo $datos['nombre'];?><br>
                 <b>Telefono: </b><?php echo $datos['telefono'];?><br>
-                 <b>Marca: </b><?php echo $datos['marca'];?><br>
+                 <b>Dispositivo: </b><?php echo $datos['tipo'];?> <?php echo $datos['marca'];?><br>
                  <b>Modelo: </b><?php echo $datos['modelo'];?><br>
-                 <b>Color: </b><?php echo $datos['color'];?><br>
+                 <?php if ($datos['extras'] == NULL) {
+                  ?>
+                  <b>Extras: </b>Color <?php echo $datos['color'];?>, con <?php echo $datos['cables'];?><br>
+                 <?php 
+                 }else{
+                  ?>
+                  <b>Extras: </b><?php echo $datos['extras'];?><br>
+                  <?php
+                 }
+                 ?>                 
                  <b>Contraseña: </b><?php echo $datos['contra'];?><br>
                  <b>Falla: </b><?php echo $datos['falla'];?><br>
-                 <b>Cables: </b><?php echo $datos['cables'];?><br>
               </p>
               <a href="#!" class="primary-content"><span class="new badge red" data-badge-caption="<?php echo 'FECHA DE SALIDA: '.$datos['fecha_salida'];?>"></span></a>
               <br><br>

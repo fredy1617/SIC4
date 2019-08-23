@@ -46,7 +46,7 @@
 		            <td>'.$id_dispositivo.'</td>
 		            <td>'.$nombre.'</td>
 		            <td>'.$telefono.'</td>
-		            <td>'.$marca.'</td>
+		            <td>'.$resultados['tipo'].' '.$marca.'</td>
 		            <td>'.$falla.'</td>
 		            <td>'.$observacion.'</td>
 		            <td>'.$total.'</td>

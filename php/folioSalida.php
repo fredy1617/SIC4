@@ -16,6 +16,13 @@ class PDF extends FPDF{
         $fila = mysqli_fetch_array($listado);
         $id_tecnico = $fila['tecnico'];
         $tecnico = mysqli_fetch_array(mysqli_query($enlace,"SELECT * FROM users WHERE user_id=$id_tecnico"));
+        $id_User = $fila['recibe'];
+        if ($id_User == NULL) {
+            $id_User =  $_SESSION['user_id'];
+        }
+        $User = mysqli_fetch_array(mysqli_query($enlace, "SELECT * FROM users WHERE user_id = '$id_User'"));
+
+        $registro = $User['firstname'].' '.$User['lastname'];
 
         // Colores de los bordes, fondo y texto
         $this->SetFillColor(255,255,255);
@@ -46,25 +53,28 @@ class PDF extends FPDF{
         $this->MultiCell(70,4,utf8_decode('CLIENTE: '.$fila['nombre']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
-        $this->MultiCell(70,4,utf8_decode('REGISTRÓ: '.$_SESSION['user_name']),0,'L',true);
+        $this->MultiCell(70,4,utf8_decode('REGISTRÓ: '.$registro),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
         $this->MultiCell(70,4,utf8_decode('TEL. SIC: 9356286'),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
-        $this->MultiCell(70,4,utf8_decode('MARCA: '.$fila['marca']),0,'L',true);
+        $this->MultiCell(70,4,utf8_decode('DISPOSITIVO: '.$fila['tipo'].' '.$fila['marca']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
         $this->MultiCell(70,4,utf8_decode('MODELO: '.$fila['modelo']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
-        $this->MultiCell(70,4,utf8_decode('COLOR: '.$fila['color']),0,'L',true);
+        if ($fila['extras'] == NULL) {
+            $this->MultiCell(70,4,utf8_decode('MAS: color '.$fila['color'].', con cable(s) de '.$fila['cables']),0,'L',true);
+        }else{
+          $this->MultiCell(70,4,utf8_decode('MAS: '.$fila['extras']),0,'L',true);
+        }
         $this->Ln($salto);
         $this->SetX(6);
         $this->MultiCell(70,4,utf8_decode('FALLA: '.$fila['falla']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
-        $this->MultiCell(70,4,utf8_decode('NOTA AL RECIBIR: '.$fila['cables']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
         $this->MultiCell(70,4,utf8_decode('------------------------------------------------------'),0,'L',true);
@@ -131,8 +141,14 @@ class PDF extends FPDF{
         $num_filas = mysqli_num_rows($listado);
         $fila = mysqli_fetch_array($listado);
         $id_tecnico = $fila['tecnico'];
-        $tecnico = mysqli_fetch_array(mysqli_query($enlace,"SELECT * FROM users WHERE user_id=$id_tecnico"));     
-        
+        $tecnico = mysqli_fetch_array(mysqli_query($enlace,"SELECT * FROM users WHERE user_id=$id_tecnico"));  $id_User = $fila['recibe'];
+        if ($id_User == NULL) {
+            $id_User =  $_SESSION['user_id'];
+        }
+        $User = mysqli_fetch_array(mysqli_query($enlace, "SELECT * FROM users WHERE user_id = '$id_User'"));
+
+        $registro = $User['firstname'].' '.$User['lastname'];
+
         // Colores de los bordes, fondo y texto
         $this->SetFillColor(255,255,255);
         $this->SetTextColor(0,0,0);
@@ -155,32 +171,38 @@ class PDF extends FPDF{
 
         //Variable salto de linea
         $salto=0;
+
         $this->SetFont('Arial','',10); 
         $this->SetY(39);
         $this->SetX(6);
         $this->MultiCell(70,4,utf8_decode('CLIENTE: '.$fila['nombre']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
-        $this->MultiCell(70,4,utf8_decode('REGISTRÓ: '.$_SESSION['user_name']),0,'L',true);
+        $this->MultiCell(70,4,utf8_decode('REGISTRÓ: '.$registro),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
         $this->MultiCell(70,4,utf8_decode('TEL. SIC: 9356286'),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
-        $this->MultiCell(70,4,utf8_decode('MARCA: '.$fila['marca']),0,'L',true);
+        $this->MultiCell(70,4,utf8_decode('DISPOSITIVO: '.$fila['tipo'].' '.$fila['marca']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
         $this->MultiCell(70,4,utf8_decode('MODELO: '.$fila['modelo']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
-        $this->MultiCell(70,4,utf8_decode('COLOR: '.$fila['color']),0,'L',true);
+        if ($fila['extras'] == NULL) {
+            $this->MultiCell(70,4,utf8_decode('MAS: color '.$fila['color'].', con cable(s) de '.$fila['cables']),0,'L',true);
+        }else{
+          $this->MultiCell(70,4,utf8_decode('MAS: '.$fila['extras']),0,'L',true);
+        }
         $this->Ln($salto);
         $this->SetX(6);
         $this->MultiCell(70,4,utf8_decode('FALLA: '.$fila['falla']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
-        $this->MultiCell(70,4,utf8_decode('NOTA AL RECIBIR: '.$fila['cables']),0,'L',true);
         $this->Ln($salto);
+
+
         $this->SetX(6);
         $this->MultiCell(70,4,utf8_decode('------------------------------------------------------'),0,'L',true);
         $this->Ln($salto);
@@ -191,14 +213,13 @@ class PDF extends FPDF{
         $this->MultiCell(70,4,utf8_decode('ESTATUS: '.$fila['estatus']),0,'L',true);
         $this->Ln($salto);
         $this->SetX(6);
-        $this->MultiCell(70,4,utf8_decode('OBSERVACIONES: '.$fila['observaciones']),0,'L',true);        
-        $this->Ln($salto);
+        $this->MultiCell(70,4,utf8_decode('OBSERVACIONES: '.$fila['observaciones']),0,'L',true);
+         $this->Ln($salto);
         $this->SetX(6);
         $this->MultiCell(70,4,utf8_decode('------------------------------------------------------'),0,'L',true);
-       
+        
         $SqlRefacciones = mysqli_query($enlace, "SELECT * FROM refacciones WHERE id_dispositivo = '$id_dispositivo'");
         $filas = mysqli_num_rows($SqlRefacciones);
-
         $sub = 0;
         if ($filas > 0) {
             $this->Ln(5);
@@ -207,11 +228,11 @@ class PDF extends FPDF{
             $this->Ln(5);
             $this->SetFont('Arial','',10);
             $this->Ln(5);
+            
             while($refaccion = mysqli_fetch_array($SqlRefacciones)){
                 $this->SetX(6);
                 $this->MultiCell(70,4,utf8_decode(" Descripción: ". $refaccion['descripcion']),0,'L',true);
                 $this->MultiCell(70,4,utf8_decode("$ ". $refaccion['cantidad'].'.00'),0,'R',true);
-                $this->Ln(3);
                 $sub=$sub+$refaccion['cantidad'];
             }
             }
@@ -241,6 +262,7 @@ class PDF extends FPDF{
         mysqli_close($enlace);
     }
     }
+
 global $pass;
 global $id_dispositivo;
 $enlace = mysqli_connect("localhost", "root", $pass, "servintcomp");
