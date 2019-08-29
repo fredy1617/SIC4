@@ -3,11 +3,6 @@
 
 	$Texto = $conn->real_escape_string($_POST['texto']);
 
-	//Filtro anti-XSS
-	$caracteres_malos = array("<", ">", "\"", "'", "/", "<", ">", "'", "/");
-	$caracteres_buenos = array("& lt;", "& gt;", "& quot;", "& #x27;", "& #x2F;", "& #060;", "& #062;", "& #039;", "& #047;");
-
-	$Texto = str_replace($caracteres_malos, $caracteres_buenos, $Texto);
 
 	//Variable vacía (para evitar los E_NOTICE)
 	$mensaje = "";
@@ -37,9 +32,11 @@
 			$fecha = $resultados['fecha'];
 			$estatus =$resultados['estatus'];
 			$observacion = $resultados['observaciones'];
-			$total = $resultados['precio'];
-
-
+			if ($resultados['precio'] == 0) {
+				$total = $resultados['mano_obra']+$resultados['t_refacciones'];
+			}else{
+				$total = $resultados['precio'];
+			}
 			//Output
 			$mensaje .= '			
 		          <tr>

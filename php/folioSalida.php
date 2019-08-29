@@ -101,21 +101,34 @@ class PDF extends FPDF{
             
             while($refaccion = mysqli_fetch_array($SqlRefacciones)){
                 $this->SetX(6);
-                $this->MultiCell(70,4,utf8_decode(" Descripción: ". $refaccion['descripcion']),0,'L',true);
+                $this->MultiCell(70,4,utf8_decode(" - ". $refaccion['descripcion']),0,'L',true);
                 $this->MultiCell(70,4,utf8_decode("$ ". $refaccion['cantidad'].'.00'),0,'R',true);
                 $sub=$sub+$refaccion['cantidad'];
             }
             }
-            $this->SetFont('Arial','B',10);
-            $this->MultiCell(70,4,utf8_decode("SUBTOTAL"),0,'L',true);
-            $this->MultiCell(70,4,utf8_decode("$ ".$sub.".00"),0,'R',true);
-            $mano=$fila['precio']-$sub;
-            $this->MultiCell(70,4,utf8_decode("Mano de Obra"),0,'L',true);
-            $this->MultiCell(70,4,utf8_decode("$ ".$mano.".00"),0,'R',true);
-            $this->SetFont('Arial','B',12);
-            $this->Ln(5);
-            $this->MultiCell(70,4,utf8_decode('TOTAL: $'.$fila['precio'].'.00'),0,'R',true);
-            $this->Ln(10);
+            if ($fila['precio'] == 0) {
+                $this->SetFont('Arial','B',10);
+                $this->MultiCell(70,4,utf8_decode("SUBTOTAL"),0,'L',true);
+                $this->MultiCell(70,4,utf8_decode("$ ".$fila['t_refacciones'].".00"),0,'R',true);
+                $Total=$fila['mano_obra']+$fila['t_refacciones'];
+                $this->MultiCell(70,4,utf8_decode("Mano de Obra"),0,'L',true);
+                $this->MultiCell(70,4,utf8_decode("$ ".$fila['mano_obra'].".00"),0,'R',true);
+                $this->SetFont('Arial','B',12);
+                $this->Ln(5);
+                $this->MultiCell(70,4,utf8_decode('TOTAL: $'.$Total.'.00'),0,'R',true);
+                $this->Ln(10);
+            }else{
+                $this->SetFont('Arial','B',10);
+                $this->MultiCell(70,4,utf8_decode("SUBTOTAL"),0,'L',true);
+                $this->MultiCell(70,4,utf8_decode("$ ".$sub.".00"),0,'R',true);
+                $mano=$fila['precio']-$sub;
+                $this->MultiCell(70,4,utf8_decode("Mano de Obra"),0,'L',true);
+                $this->MultiCell(70,4,utf8_decode("$ ".$mano.".00"),0,'R',true);
+                $this->SetFont('Arial','B',12);
+                $this->Ln(5);
+                $this->MultiCell(70,4,utf8_decode('TOTAL: $'.$fila['precio'].'.00'),0,'R',true);
+                $this->Ln(10);
+            }
         $this->SetX(6);
         $this->SetFont('Arial','',10);
         $this->MultiCell(70,4,utf8_decode('_________________________________'),0,'L',false);
@@ -231,21 +244,34 @@ class PDF extends FPDF{
             
             while($refaccion = mysqli_fetch_array($SqlRefacciones)){
                 $this->SetX(6);
-                $this->MultiCell(70,4,utf8_decode(" Descripción: ". $refaccion['descripcion']),0,'L',true);
+                $this->MultiCell(70,4,utf8_decode(" - ". $refaccion['descripcion']),0,'L',true);
                 $this->MultiCell(70,4,utf8_decode("$ ". $refaccion['cantidad'].'.00'),0,'R',true);
                 $sub=$sub+$refaccion['cantidad'];
             }
             }
-            $this->SetFont('Arial','B',10);
-            $this->MultiCell(70,4,utf8_decode("SUBTOTAL"),0,'L',true);
-            $this->MultiCell(70,4,utf8_decode("$ ".$sub.".00"),0,'R',true);
-            $mano=$fila['precio']-$sub;
-            $this->MultiCell(70,4,utf8_decode("Mano de Obra"),0,'L',true);
-            $this->MultiCell(70,4,utf8_decode("$ ".$mano.".00"),0,'R',true);
-            $this->SetFont('Arial','B',12);
-            $this->Ln(5);
-            $this->MultiCell(70,4,utf8_decode('TOTAL: $'.$fila['precio'].'.00'),0,'R',true);
-            $this->Ln(10);
+            if ($fila['precio'] == 0) {
+                $this->SetFont('Arial','B',10);
+                $this->MultiCell(70,4,utf8_decode("SUBTOTAL"),0,'L',true);
+                $this->MultiCell(70,4,utf8_decode("$ ".$fila['t_refacciones'].".00"),0,'R',true);
+                $Total=$fila['mano_obra']+$fila['t_refacciones'];
+                $this->MultiCell(70,4,utf8_decode("Mano de Obra"),0,'L',true);
+                $this->MultiCell(70,4,utf8_decode("$ ".$fila['mano_obra'].".00"),0,'R',true);
+                $this->SetFont('Arial','B',12);
+                $this->Ln(5);
+                $this->MultiCell(70,4,utf8_decode('TOTAL: $'.$Total.'.00'),0,'R',true);
+                $this->Ln(10);
+            }else{
+                $this->SetFont('Arial','B',10);
+                $this->MultiCell(70,4,utf8_decode("SUBTOTAL"),0,'L',true);
+                $this->MultiCell(70,4,utf8_decode("$ ".$sub.".00"),0,'R',true);
+                $mano=$fila['precio']-$sub;
+                $this->MultiCell(70,4,utf8_decode("Mano de Obra"),0,'L',true);
+                $this->MultiCell(70,4,utf8_decode("$ ".$mano.".00"),0,'R',true);
+                $this->SetFont('Arial','B',12);
+                $this->Ln(5);
+                $this->MultiCell(70,4,utf8_decode('TOTAL: $'.$fila['precio'].'.00'),0,'R',true);
+                $this->Ln(10);
+            }
         $this->SetX(6);
         $this->SetFont('Arial','',10);
         $this->MultiCell(70,4,utf8_decode('_________________________________'),0,'L',false);

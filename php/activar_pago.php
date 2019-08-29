@@ -17,7 +17,7 @@ $Fecha_hoy = date('Y-m-d');
     $Username = $servidor['user']; //usuario_API
     $Pass = $servidor['pass']; //contraseña_API
     $Port = $servidor['port']; //puerto_API
-    $Descripcion = 'Reporte generado automáticamente por un error al generar pago';
+    $Descripcion = 'Reporte generado automáticamente por un error al generar pago (IP)';
 
     /// VARIABLES DE FORMULARIO
     $address= $cliente['ip']; // direccion que borraremos en el address-list
@@ -42,21 +42,21 @@ $Fecha_hoy = date('Y-m-d');
             }
             $API->disconnect();
         }else{
-          echo "No se ha podido hacer conexión al mikrotik: ".$servidor['nombre'];
-          $sql = "INSERT INTO reportes (id_cliente, descripcion, fecha) VALUES ($IdCliente, 'Hubo un error con la conexion al mikrotik.', '$Fecha_hoy')";
+          echo "<html><font color = 'red'><h3>OCURRIO UN ERROR 404... CONSULTAR CON PROGRAMACION ! CLIENTE: ".$IdCliente."</h3> </font></html>";
+          $sql = "INSERT INTO reportes (id_cliente, descripcion, fecha) VALUES ('$IdCliente', 'Hubo un error con la conexion al mikrotik.', '$Fecha_hoy')";
           if(mysqli_query($conn, $sql)){
             echo "<br> El reporte se dió de alta satisfcatoriamente.<br>";
           }else{
-            echo "Ha ocurrido un error al generar el reporte automatico.<br>"; 
+           mysqli_query($conn, "INSERT INTO reportes (id_cliente, descripcion, fecha) VALUES '$IdCliente', 'Error a generar reporte auntomatico conexion mikrotik', '$Fecha_hoy'"); 
           }
         }
     }else{
-      echo "Hubo conflicto con la IP o el Firewall del servidor ";
-      $sql2 = "INSERT INTO reportes (id_cliente, descripcion, fecha) VALUES ($IdCliente, '$Descripcion', '$Fecha_hoy')";
+      echo "<html><font color = 'red'><h3>OCURRIO UN ERROR 204... CONSULTAR CON PROGRAMACION ! CLIENTE: ".$IdCliente."</h3> </font></html>";
+      $sql2 = "INSERT INTO reportes (id_cliente, descripcion, fecha) VALUES ('$IdCliente', '$Descripcion', '$Fecha_hoy')";
         if(mysqli_query($conn, $sql2)){
           echo "El reporte se dió de alta satisfcatoriamente.<br>";
         }else{
-          echo "Ha ocurrido un error al generar el reporte automatico.<br>"; 
+          mysqli_query($conn, "INSERT INTO reportes (id_cliente, descripcion, fecha) VALUES '$IdCliente', 'Error a generar reporte auntomatico error de IP', '$Fecha_hoy'"); 
         }
     }
 //fin de busqueda en el firewall del mikrotik  

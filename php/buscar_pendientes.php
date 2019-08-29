@@ -1,4 +1,4 @@
-ñ<?php 
+<?php 
 	include 'conexion.php';
 
 	$Texto = $conn->real_escape_string($_POST['texto']);

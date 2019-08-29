@@ -152,10 +152,11 @@ include ('../php/cobrador.php');
           </div>
         </div><br>
       <!-- MUESTRA REPORTES DE RUTA--->
-        <div class="row">
+        <div class="row" >
             <div id="reporte_borrar"></div>
           <h3 class="hide-on-med-and-down">Ruta Reportes</h3>
           <h5 class="hide-on-large-only">Ruta Reportes</h5>
+          <div id="resultado_ruta_reporte">
           <table>
               <thead>
                   <tr>
@@ -200,6 +201,7 @@ include ('../php/cobrador.php');
               ?>
               </tbody>
           </table>
+          </div>
         </div>
         <br><br>
         <a onclick="modal()" class="btn waves-light waves-effect right pink">Imprimir</a>

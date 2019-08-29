@@ -26,8 +26,11 @@ if ($filas == 0) {
 		$fecha = $resultados['fecha'];
 		$observacion = $resultados['observaciones'];
 		$id_tecnico = $resultados['tecnico'];
-		$total = $resultados['precio'];
-
+		if ($resultados['precio'] == 0) {
+			$total = $resultados['mano_obra']+$resultados['t_refacciones'];
+		}else{
+			$total = $resultados['precio'];
+		}
 		if ($resultados['extras'] == NULL) {
 			$extra = 'color '.$color.', con cable(s) de '.$cables;
 		}else{

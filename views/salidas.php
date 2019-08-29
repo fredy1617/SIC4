@@ -10,17 +10,23 @@ $tecnico = $_SESSION['user_id'];
 ?>
 <title>SIC | Salidas</title>
 <script>
+  function borrar_refa(IdRefaccion){
+    $.post("../php/borrar_refa.php", {           
+            valorIdRefaccion: IdRefaccion,
+    }, function(mensaje) {
+    $("#refa_borrar").html(mensaje);
+    }); 
+  };
 function salida(imprimir) {
     var textoLink = $("textarea#link").val();
     var textoObservaciones = $("textarea#observaciones").val();
-    var textoPrecio = $("input#precio").val();
+    var textoManoObra = $("input#mano").val();
     var textoIdDispositivo = $("input#id_dispositivo").val();
     var textoEstatus = $("select#estatus").val();
 
     textoTecnico = <?php echo $tecnico;?>;
     n=1;
     textoRefacciones = '';
-    subtotal=0;
     entra = "Si";
     while(n<11){
       var textoNumero = $("input#numero"+n).val();
@@ -37,8 +43,6 @@ function salida(imprimir) {
            M.toast({html :"Ingrese un Precio En: Precio No."+n, classes: "rounded"});   
            entra = "No"      
         }else{
-          var Precio = parseInt(textoPrecioR);
-          subtotal+= Precio;
           entra = "Si";
           textoRefacciones += textoDesc+" - "+textoPrecioR+", ";
         }
@@ -47,25 +51,24 @@ function salida(imprimir) {
     }
     if (entra == "No") {
       //M.toast({html:"Dice que no.", classes: "rounded"});
-    }else if(textoPrecio == ""){
+    }else if(textoManoObra == ""){
       M.toast({html:"El campo Mano de Obra se encuentra vacío.", classes: "rounded"});
     }else if(textoEstatus == '0'){
       M.toast({html:"Seleccione un Estatus por favor.", classes: "rounded"});
     }else {
-      var textoPrecio = parseInt(textoPrecio);
-      textoPrecio = textoPrecio+subtotal;
 
       $.post("../php/update_salida.php", {
+
           valorLink: textoLink,
           valorObservaciones: textoObservaciones,
-          valorPrecio: textoPrecio,
+          valorManoObra: textoManoObra,
           valorIdDispositivo: textoIdDispositivo,
           valorTecnico: textoTecnico,
           valorEstatus: textoEstatus,
           valorImprimir: imprimir,
           valorRefacciones: textoRefacciones
         }, function(mensaje) {
-            $("#resultado_dispositivo").html(mensaje);
+            $("#refrescar").html(mensaje);
         }); 
     }
 };
@@ -73,13 +76,13 @@ function salida(imprimir) {
 </head>
 <main>
 <body>
-<div class="container" id="resultado_dispositivo">
-</div>
-	<div class="container row">
+	<div class="container" id="refrescar">
+    <div id="refrescar">
     <div class="row">
       <h2 class="hide-on-med-and-down">Salida</h2>
       <h4 class="hide-on-large-only">Salida</h4>
     </div>
+    
     	<?php
         $id_dispositivo = $_POST['id_dispositivo'];
         $datos = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM dispositivos WHERE id_dispositivo = $id_dispositivo"));
@@ -136,15 +139,46 @@ function salida(imprimir) {
           </div>
           <div class="row">
             <h4>Refacciones:</h4>
+            <div id="refa_borrar">
+              <table>
+                <thead>
+                  <th>#</th>
+                  <th>Refacción</th>
+                  <th>Precio</th>
+                  <th>Borrar</th>
+                </thead>
+                <tbody>
+                 
+                  <?php
+                  $sql = mysqli_query($conn, "SELECT * FROM refacciones WHERE id_dispositivo = '$id_dispositivo' ");
+                  if (mysqli_num_rows($sql)>0) {
+                    $aux= 0;
+                    while ($refas = mysqli_fetch_array($sql)) {
+                      $aux++;
+                      ?>
+                    <tr>
+                      <td><?php echo $aux; ?></td>
+                      <td><?php echo $refas['descripcion']; ?></td>
+                      <td>$<?php echo $refas['cantidad']; ?></td>
+                      <td><a onclick="borrar_refa(<?php echo $refas['id_refaccion']; ?>);" class="btn btn-floating red darken-1 waves-effect waves-light"><i class="material-icons">delete</i></a></td>
+
+                    </tr>
+                      <?php
+                    }
+                  }
+                  ?>
+                </tbody>
+              </table>
+            </div>
             <div class="button">
              <button type="button" id="add_Desc" class="waves-effect waves-light btn pink right"><i class="material-icons right">add</i>Agregar</button>
-        </div>
+            </div>
           </div>
           <div class="row">
             <div class="input-field col s12 m4 l4">
               <i class="material-icons prefix">monetization_on</i>
-              <input id="precio" type="number" class="validate" data-length="6" value="<?php echo $datos['precio'];?>" required>
-              <label for="precio">Mano de Obra:</label>
+              <input id="mano" type="number" class="validate" data-length="6" value="<?php  if($datos['precio'] > 0){ echo $datos['precio']; }else{ echo $datos['mano_obra'];}?>" required>
+              <label for="mano">Mano de Obra:</label>
             </div>
             <input id="id_dispositivo" type="hidden" class="validate" data-length="6" value="<?php echo $datos['id_dispositivo'];?>" required>
             
@@ -161,11 +195,13 @@ function salida(imprimir) {
             </div>            
         </form>
        
-    </div>
+    
     <?php
     mysqli_close($conn);
     ?>
+    </div>
     <br><br><br>
+  </div>
 </body>
 <script>
   $(document).ready(function() {
