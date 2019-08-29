@@ -53,9 +53,10 @@
 
   	while ($instalacion = mysqli_fetch_array($instalaciones)) {
   		$id_cliente = $instalacion['id_cliente'];
-  		if (mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tmp_pendientes WHERE id_cliente = $id_cliente") > 0)) {
-  			echo '<script>M.toast({html: "Ya se encuentra esta instalacion en ruta.", classes: "rounded"});</script>';
-  		}else{
+  		$sql_chequeo = mysqli_query($conn, "SELECT * FROM tmp_pendientes WHERE id_cliente = $id_cliente");
+      $numero_columnas = mysqli_num_rows($sql_chequeo);
+      if($numero_columnas==0){
+
   			$nombre = $instalacion['nombre'];
   			$telefono = $instalacion['telefono'];
   			$lugar = $instalacion['lugar'];
@@ -69,7 +70,10 @@
   			if (mysqli_query($conn, "INSERT INTO tmp_pendientes (id_cliente, nombre, telefono, lugar, direccion, referencia, total, dejo, pagar, paquete, fecha_registro) VALUES ($id_cliente, '$nombre', '$telefono', '$lugar', '$direccion', '$referencia', $total, $dejo, $pagar, $paquete, '$fecha')")) {
   				$inst ++;
   			}
-  		}
+  		  
+      }else{
+        echo '<script>M.toast({html: "Ya se encuentra esta instalacion en ruta.", classes: "rounded"});</script>';
+      }
   	}
   $mensaje.= 'Instalaciones: '.$inst.'/'.$SiInst;
   }
