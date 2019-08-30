@@ -64,7 +64,7 @@
                 $id_pago = $fila['id_pago'];
                 mysqli_query($enlace,"INSERT INTO detalles(id_corte, id_pago) VALUES ($corte, $id_pago )");
                 $this->SetX(6);
-                $this->MultiCell(70,4,utf8_decode(" Cliente: # " . $fila['id_cliente'] . '; ' . $fila['descripcion']),0,'L',true);
+                $this->MultiCell(70,4,utf8_decode("Cliente: # " .$fila['id_cliente'].'; '.$fila['descripcion']),0,'L',true);
                 $this->MultiCell(70,4,utf8_decode("$ ". $fila['cantidad'].'.00'),0,'R',true);
                 $this->Ln(5);
             }
@@ -87,7 +87,7 @@
                 $id_pago = $fila['id_pago'];
                 mysqli_query($enlace,"INSERT INTO detalles(id_corte, id_pago) VALUES ($corte, $id_pago )");
                 $this->SetX(6);
-                $this->MultiCell(70,4,utf8_decode(" Cliente: # " . $fila['id_cliente'] . '; ' . $fila['descripcion']),0,'L',true);
+                $this->MultiCell(70,4,utf8_decode("Cliente: # ".$fila['id_cliente'].'; '.$fila['descripcion']),0,'L',true);
                 $this->MultiCell(70,4,utf8_decode("$ ". $fila['cantidad'].'.00'),0,'R',true);
                 $this->Ln(5);
             }

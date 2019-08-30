@@ -198,7 +198,7 @@ $paquete_cliente = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM paquete
         <div class="col s12"><br>
         <div class="input-field">
               <i class="material-icons prefix">add_location</i>
-              <input id="coordenada" type="text" class="validate" data-length="15" required>
+              <input id="coordenada" type="text" class="validate" data-length="15" required value="<?php echo $cliente['coordenadas'];?>">
               <label for="coordenada">Coordenada:</label>
             </div>
       </div>

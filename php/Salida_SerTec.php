@@ -248,7 +248,7 @@ class PDF extends FPDF{
                 $this->MultiCell(70,4,utf8_decode("$ ". $refaccion['cantidad'].'.00'),0,'R',true);
                 $sub=$sub+$refaccion['cantidad'];
             }
-            }
+        }
             if ($fila['precio'] == 0) {
                 $this->SetFont('Arial','B',10);
                 $this->MultiCell(70,4,utf8_decode("SUBTOTAL"),0,'L',true);
@@ -295,16 +295,48 @@ $enlace = mysqli_connect("localhost", "root", $pass, "servintcomp");
 
 $listado = mysqli_query($enlace, "SELECT * FROM dispositivos WHERE id_dispositivo=$id_dispositivo");
 $num_filas = mysqli_num_rows($listado);
-$fila = mysqli_fetch_array($listado);
+if ($num_filas > 0) {
+    $fila = mysqli_fetch_array($listado);
 
-date_default_timezone_set('America/Mexico_City');
-$FechaSalida = date('Y-m-d');
+    date_default_timezone_set('America/Mexico_City');
+    $FechaSalida = date('Y-m-d');
 
-mysqli_query ($enlace, "UPDATE dispositivos SET  estatus='Entregado', fecha_salida='$FechaSalida' WHERE id_dispositivo='$id_dispositivo'");
+    mysqli_query ($enlace, "UPDATE dispositivos SET  estatus='Entregado', fecha_salida='$FechaSalida' WHERE id_dispositivo='$id_dispositivo'");
+    //DAR DE ALTA LOS PAGOS
+    $id_User =  $_SESSION['user_id'];
+
+    $SqlRefacciones = mysqli_query($enlace, "SELECT * FROM refacciones WHERE id_dispositivo = '$id_dispositivo'");
+    $filas = mysqli_num_rows($SqlRefacciones);
+    $sub = 0;
+    if ($filas > 0) {
+        //REFACCIONES-------            
+        while($refaccion = mysqli_fetch_array($SqlRefacciones)){
+                $sub=$sub+$refaccion['cantidad'];
+                $descripcion = 'Refaccion: '.$refaccion['descripcion'];
+                $precio = $refaccion['cantidad'];
+                if (mysqli_num_rows(mysqli_query($enlace, "SELECT * FROM pagos WHERE id_cliente = '$id_dispositivo' AND descripcion = '$descripcion' AND tipo = 'Dispositivo'"))< 0){
+                    $sql = "INSERT INTO pagos(id_cliente, descripcion, cantidad, fecha, tipo, id_user, corte, tipo_cambio, Cotejado) VALUES ($id_dispositivo, '$descripcion', '$precio', '$FechaSalida', 'Dispositivo', $id_User, 0, 'Efectivo', 0)";
+                    mysqli_query($enlace, $sql);
+                }
+        }
+    }
+    if ($fila['precio'] == 0) {
+        $cantidad = $fila['mano_obra'];
+    }else{
+        $cantidad = $fila['precio']-$sub;
+    }
+    //MANO DE ORBRA-----}
+    if (mysqli_num_rows(mysqli_query($enlace, "SELECT * FROM pagos WHERE id_cliente = $id_dispositivo AND descripcion = 'Mano de Obra' AND tipo = 'Dispositivo'"))< 0){
+        $sql = "INSERT INTO pagos(id_cliente, descripcion, cantidad, fecha, tipo, id_user, corte, tipo_cambio, Cotejado) VALUES ($id_dispositivo, 'Mano de Obra', '$cantidad', '$FechaSalida', 'Dispositivo', $id_User, 0, 'Efectivo', 0)";
+        mysqli_query($enlace, $sql);
+    }
+}
+
 
 $pdf = new PDF('P', 'mm', array(80,297));
 $pdf->SetTitle('Folio_'.$id_dispositivo.'_'.$fila['nombre'].'_'.'_'.$fila['marca'].'_'.$fila['modelo'].'_color_'.$fila['color']);
 $pdf->folioCliente();
 $pdf->folioCliente2();
 $pdf->Output('Folio_'.$id_dispositivo.'_'.$fila['nombre'].'_'.'_'.$fila['marca'].'_'.$fila['modelo'].'_color_'.$fila['color'],'I');
+
 ?>

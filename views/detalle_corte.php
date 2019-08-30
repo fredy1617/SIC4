@@ -21,12 +21,12 @@
 	  <table class="bordered  highlight responsive-table">
 	  	<thead>
 	  		<tr>
-	  			<td>Id Pago</td>
-	  			<td>Cliente</td>
-	  			<td>Descripción</td>
-	  			<td>Tipo</td>
-	  			<td>Fecha</td>
-	  			<td>Cantidad</td>
+	  			<th>Id Pago</th>
+		  		<th>Cliente</th>
+		  		<th>Descripción</th>
+		  		<th>Tipo</th>
+		  		<th>Fecha</th>
+		  		<th>Cantidad</th>
 	  		</tr>
 	  	</thead>
 	  	<tbody>
@@ -42,7 +42,11 @@
 	    	if ($fila > 0) {
 	    	$pagox1 = mysqli_fetch_array($sql);
 	    	$id_cliente = $pagox1['id_cliente'];
-	    	$cliente = mysqli_fetch_array( mysqli_query($conn,  "SELECT nombre FROM clientes WHERE id_cliente = $id_cliente"));
+	    	$sql2 = mysqli_query($conn,  "SELECT nombre FROM clientes WHERE id_cliente = $id_cliente");
+	    	if (mysqli_num_rows($sql2)==0) {
+	    		$sql2 = mysqli_query($conn,  "SELECT nombre FROM dispositivos WHERE id_dispositivo = $id_cliente");
+	    	}
+	    	$cliente = mysqli_fetch_array($sql2);
 	      ?>
 	      <tr>
 	        <td><?php echo $pagox1['id_pago'];?></td>
@@ -93,7 +97,11 @@
 	  		if ($filas > 0) {
 	  		$pago = mysqli_fetch_array($sql);
 	  		$id_cliente = $pago['id_cliente'];
-	  		$cliente = mysqli_fetch_array(mysqli_query($conn, "SELECT nombre FROM clientes WHERE id_cliente = id_cliente"));
+	  		$sql2 = mysqli_query($conn,  "SELECT nombre FROM clientes WHERE id_cliente = $id_cliente");
+	    	if (mysqli_num_rows($sql2)==0) {
+	    		$sql2 = mysqli_query($conn,  "SELECT nombre FROM dispositivos WHERE id_dispositivo = $id_cliente");
+	    	}
+	    	$cliente = mysqli_fetch_array($sql2);
 	  	?>	
 	  		<tr>
 		  		<td><?php echo $pago['id_pago'];?></td>

@@ -163,7 +163,6 @@ if(mysqli_query($conn, $sql)){
             <div class="input-field col l5 m5 s12">
               <select id="estatus" class="browser-default">
                 <option value="<?php echo $datos['estatus'];?>" selected><?php echo $datos['estatus'];?></option>
-                <option value="Entregado">Entregado</option>
                 <option value="Listo (En Taller)">Listo (En Taller)</option>
               </select>
             </div>
